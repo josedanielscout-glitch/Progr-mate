@@ -4,20 +4,27 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Prográmate | Agenda Universitaria</title>
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <script>
         tailwind.config = {
             theme: {
                 extend: {
-                    fontFamily: { sans: ['Outfit', 'sans-serif'] },
+                    fontFamily: {
+                        sans: ['Outfit', 'sans-serif'],
+                    },
                     colors: {
                         primary: '#6C63FF',
                         secondary: '#FF6584',
                         accent: '#FFD93D',
                         glass: 'rgba(255, 255, 255, 0.7)',
+                        glassBorder: 'rgba(255, 255, 255, 0.5)',
+                        darkGlass: 'rgba(20, 20, 20, 0.6)',
                     },
                     animation: {
                         'float': 'float 6s ease-in-out infinite',
@@ -35,99 +42,261 @@
         }
     </script>
     <style>
-        body { background-color: #f3f4f6; overflow-x: hidden; }
+        body {
+            background-color: #f3f4f6;
+            overflow-x: hidden;
+        }
+        
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1; 
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #c7c7c7; 
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #a8a8a8; 
+        }
+
         .glass-card {
             background: rgba(255, 255, 255, 0.85);
             backdrop-filter: blur(8px);
             border: 1px solid rgba(255, 255, 255, 0.6);
             transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
         }
+
         .glass-card:hover {
             transform: translateY(-8px) scale(1.02);
             box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
             border-color: #6C63FF;
         }
-        .blob { position: fixed; border-radius: 50%; filter: blur(60px); z-index: -1; opacity: 0.6; }
+
+        /* Background Blobs */
+        .blob {
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(60px);
+            z-index: -1;
+            opacity: 0.6;
+        }
     </style>
 </head>
 <body class="text-gray-800 antialiased min-h-screen relative selection:bg-primary selection:text-white">
 
+    <!-- Background Blobs -->
     <div class="blob bg-purple-400 w-96 h-96 top-0 left-0 -translate-x-1/2 -translate-y-1/2 animate-float"></div>
     <div class="blob bg-pink-400 w-80 h-80 bottom-0 right-0 translate-x-1/3 translate-y-1/3 animate-float-delayed"></div>
     <div class="blob bg-yellow-200 w-64 h-64 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 animate-pulse-slow"></div>
 
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 relative z-10">
+    <!-- Main Container -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 relative z-10">
         
-        <div id="events-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-12">
-            </div>
+        <!-- Header (Simple Title) -->
+        <header class="mb-12 text-center">
+            <h1 class="text-4xl md:text-5xl font-extrabold tracking-tight mb-2">
+                <span class="bg-clip-text text-transparent bg-gradient-to-r from-primary via-purple-500 to-secondary">
+                    Agenda de Eventos
+                </span>
+            </h1>
+        </header>
 
+        <!-- Events Grid -->
+        <div id="events-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <!-- Cards will be injected here via JS -->
+        </div>
+
+        <!-- Empty State (Hidden by default) -->
         <div id="empty-state" class="hidden text-center py-20">
             <div class="text-6xl mb-4">🍃</div>
             <h3 class="text-2xl font-bold text-gray-700">No hay eventos programados</h3>
         </div>
 
+        <!-- Footer (Branding) -->
         <footer class="mt-24 mb-12 text-center border-t border-gray-200/60 pt-10">
             <h2 class="text-3xl font-extrabold tracking-tight mb-2">
                 <span class="bg-clip-text text-transparent bg-gradient-to-r from-primary via-purple-500 to-secondary">
                     Prográmate
                 </span>
             </h2>
-            <p class="text-base text-gray-500">Tu agenda universitaria en un solo lugar.</p>
+            <p class="text-base text-gray-500 max-w-lg mx-auto">
+                Tu agenda universitaria en un solo lugar.
+                <span class="font-bold text-primary">Conecta</span>, <span class="font-bold text-secondary">Aprende</span> y <span class="font-bold text-accent">Vive</span> la U.
+            </p>
         </footer>
+
     </div>
 
+    <!-- Logic -->
     <script>
+        // --- Configuration ---
         const categoryConfig = {
+            ecologica: { label: 'Ecológica', icon: 'fa-leaf', colorClass: 'bg-green-500 text-white' },
+            cultural: { label: 'Cultural', icon: 'fa-palette', colorClass: 'bg-orange-500 text-white' },
+            socioeconomica: { label: 'Socioeconómica', icon: 'fa-handshake', colorClass: 'bg-yellow-500 text-white' },
+            espiritual: { label: 'Espiritual', icon: 'fa-praying-hands', colorClass: 'bg-purple-600 text-white' },
+            psicoafectiva: { label: 'Psicoafectiva', icon: 'fa-heart', colorClass: 'bg-pink-600 text-white' },
+            acompanamiento: { label: 'Acompañamiento', icon: 'fa-users', colorClass: 'bg-blue-500 text-white' },
+            fisica: { label: 'Física', icon: 'fa-running', colorClass: 'bg-red-500 text-white' },
+            // Fallback for old ones just in case
             pastoral: { label: 'Pastoral', icon: 'fa-dove', colorClass: 'bg-indigo-500 text-white' },
-            bienestar: { label: 'Bienestar', icon: 'fa-leaf', colorClass: 'bg-pink-500 text-white' },
-            experiencia: { label: 'Experiencia', icon: 'fa-sparkles', colorClass: 'bg-orange-500 text-white' },
-            academia: { label: 'Academia', icon: 'fa-graduation-cap', colorClass: 'bg-blue-600 text-white' },
-            biblioteca: { label: 'Biblioteca', icon: 'fa-book-open', colorClass: 'bg-teal-600 text-white' },
-            admisiones: { label: 'Admisiones', icon: 'fa-id-card', colorClass: 'bg-purple-600 text-white' },
-            idiomas: { label: 'Idiomas', icon: 'fa-language', colorClass: 'bg-red-500 text-white' },
             default: { label: 'Evento', icon: 'fa-calendar-day', colorClass: 'bg-gray-600 text-white' }
         };
 
-        // Lista de eventos estática
-        let events = [
-            { id: 1, title: "Retiro: El Silencio Interior", category: "pastoral", date: "2024-03-15", time: "08:00", image: "https://images.unsplash.com/photo-1507692049790-de58293a469d?q=80&w=1000", location: "Capilla Central" },
-            { id: 2, title: "Torneo de Videojuegos", category: "experiencia", date: "2024-03-18", time: "14:30", image: "https://images.unsplash.com/photo-1542751371-adc38448a05e?q=80&w=1000", location: "Zona de Esparcimiento" },
-            { id: 3, title: "Seminario de Investigación", category: "academia", date: "2024-03-20", time: "10:00", image: "https://images.unsplash.com/photo-1523240795612-9a054b0db644?q=80&w=1000", location: "Auditorio Mayor" }
+        // --- Data ---
+        // Sample Initial Data with new categories
+        const initialEvents = [
+            {
+                id: 1,
+                title: "Sembratón Universitaria",
+                category: "ecologica",
+                date: "2024-03-15",
+                time: "08:00",
+                image: "https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?q=80&w=1000&auto=format&fit=crop",
+                link: "#",
+                location: "Jardín Botánico"
+            },
+            {
+                id: 2,
+                title: "Festival de Teatro",
+                category: "cultural",
+                date: "2024-03-18",
+                time: "16:30",
+                image: "https://images.unsplash.com/photo-1503095392269-27528ca388ec?q=80&w=1000&auto=format&fit=crop",
+                link: "#",
+                location: "Auditorio Principal"
+            },
+            {
+                id: 3,
+                title: "Feria de Emprendimiento",
+                category: "socioeconomica",
+                date: "2024-03-20",
+                time: "10:00",
+                image: "https://images.unsplash.com/photo-1556761175-5973dc0f32e7?q=80&w=1000&auto=format&fit=crop",
+                link: "#",
+                location: "Plazoleta Central"
+            },
+            {
+                id: 4,
+                title: "Retiro de Silencio",
+                category: "espiritual",
+                date: "2024-03-22",
+                time: "07:00",
+                image: "https://images.unsplash.com/photo-1507692049790-de58293a469d?q=80&w=1000&auto=format&fit=crop",
+                link: "#",
+                location: "Capilla"
+            },
+            {
+                id: 5,
+                title: "Taller: Gestión de Emociones",
+                category: "psicoafectiva",
+                date: "2024-03-25",
+                time: "14:00",
+                image: "https://images.unsplash.com/photo-1499209974431-9dac3adaf471?q=80&w=1000&auto=format&fit=crop",
+                link: "#",
+                location: "Sala de Bienestar"
+            },
+             {
+                id: 6,
+                title: "Mentoría de Pares",
+                category: "acompanamiento",
+                date: "2024-03-28",
+                time: "11:00",
+                image: "https://images.unsplash.com/photo-1517486808906-6ca8b3f04846?q=80&w=1000&auto=format&fit=crop",
+                link: "#",
+                location: "Biblioteca"
+            },
+            {
+                id: 7,
+                title: "Carrera 5K por la Salud",
+                category: "fisica",
+                date: "2024-04-05",
+                time: "07:00",
+                image: "https://images.unsplash.com/photo-1552674605-46d53b925b4b?q=80&w=1000&auto=format&fit=crop",
+                link: "#",
+                location: "Pista Atlética"
+            }
         ];
 
+        let events = [...initialEvents];
+
+        // --- DOM Elements ---
         const grid = document.getElementById('events-grid');
+        const emptyState = document.getElementById('empty-state');
 
-        const renderEvents = () => {
-            grid.innerHTML = '';
-            if (events.length === 0) {
-                document.getElementById('empty-state').classList.remove('hidden');
-                return;
-            }
-            document.getElementById('empty-state').classList.add('hidden');
-
-            events.forEach(event => {
-                const config = categoryConfig[event.category] || categoryConfig.default;
-                const card = document.createElement('div');
-                card.className = 'glass-card rounded-3xl overflow-hidden flex flex-col h-full group relative';
-                card.innerHTML = `
-                    <div class="h-48 overflow-hidden relative">
-                        <img src="${event.image}" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
-                        <div class="absolute top-4 right-4 ${config.colorClass} text-xs font-bold px-3 py-1 rounded-full shadow-md">
-                            <i class="fas ${config.icon}"></i> ${config.label}
-                        </div>
-                    </div>
-                    <div class="p-6">
-                        <h3 class="text-xl font-bold text-gray-800 mb-2">${event.title}</h3>
-                        <p class="text-sm text-gray-500 mb-1"><i class="far fa-clock text-accent mr-2"></i>${event.time}</p>
-                        <p class="text-sm text-gray-500"><i class="fas fa-map-marker-alt text-accent mr-2"></i>${event.location}</p>
-                    </div>
-                `;
-                grid.appendChild(card);
-            });
+        // --- Formatting Functions ---
+        const formatTime = (timeString) => {
+            const [hours, minutes] = timeString.split(':');
+            const h = parseInt(hours, 10);
+            const ampm = h >= 12 ? 'PM' : 'AM';
+            const formattedHour = h % 12 || 12;
+            return `${formattedHour}:${minutes} ${ampm}`;
         };
 
-        // Carga inicial
+        // --- Render Function ---
+        const renderEvents = () => {
+            grid.innerHTML = '';
+            
+            if (events.length === 0) {
+                emptyState.classList.remove('hidden');
+            } else {
+                emptyState.classList.add('hidden');
+                
+                events.forEach(event => {
+                    // Get styling from config or fallback
+                    const config = categoryConfig[event.category] || categoryConfig.default;
+                    
+                    const card = document.createElement('div');
+                    card.className = 'glass-card rounded-3xl overflow-hidden flex flex-col h-full group relative';
+                    card.innerHTML = `
+                        <div class="h-48 overflow-hidden relative">
+                            <img src="${event.image}" alt="${event.title}" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+                            <div class="absolute top-4 right-4 ${config.colorClass} text-xs font-bold px-3 py-1 rounded-full shadow-md flex items-center gap-1">
+                                <i class="fas ${config.icon}"></i> ${config.label}
+                            </div>
+                            <div class="absolute bottom-0 left-0 w-full h-1/2 bg-gradient-to-t from-white/90 to-transparent"></div>
+                        </div>
+                        
+                        <div class="p-6 flex-1 flex flex-col relative">
+                            <!-- Floating Date Box -->
+                            <div class="absolute -top-10 left-6 bg-white rounded-xl shadow-lg p-2 text-center w-16 h-16 flex flex-col justify-center items-center border border-gray-100 z-10">
+                                <span class="text-xs font-bold text-gray-400 uppercase block leading-none mb-1">${new Date(event.date).toLocaleDateString('es-ES', {month: 'short'}).replace('.', '')}</span>
+                                <span class="text-xl font-extrabold text-gray-800 leading-none">${new Date(event.date).getDate() + 1}</span>
+                            </div>
+
+                            <div class="mt-4 mb-2">
+                                <h3 class="text-xl font-bold text-gray-800 leading-tight group-hover:text-primary transition-colors">${event.title}</h3>
+                            </div>
+                            
+                            <div class="space-y-2 mb-6 text-sm text-gray-500">
+                                <div class="flex items-center gap-2">
+                                    <i class="far fa-clock text-accent"></i>
+                                    <span>${formatTime(event.time)}</span>
+                                </div>
+                                <div class="flex items-center gap-2">
+                                    <i class="fas fa-map-marker-alt text-accent"></i>
+                                    <span>${event.location || 'Campus'}</span>
+                                </div>
+                            </div>
+                            
+                            <div class="mt-auto pt-4 border-t border-gray-100">
+                                <a href="${event.link}" target="_blank" class="w-full block text-center bg-gray-800 text-white font-bold py-3 rounded-xl transition-all hover:bg-primary">
+                                    Inscribirse
+                                </a>
+                            </div>
+                        </div>
+                    `;
+                    grid.appendChild(card);
+                });
+            }
+        };
+
+        // Initialize
         renderEvents();
+
     </script>
 </body>
 </html>
