@@ -95,6 +95,52 @@
 </head>
 <body class="text-gray-800 antialiased min-h-screen relative selection:bg-primary selection:text-white">
 
+    <!-- Background Blobs -->
+    <div class="blob bg-purple-400 w-96 h-96 top-0 left-0 -translate-x-1/2 -translate-y-1/2 animate-float"></div>
+    <div class="blob bg-pink-400 w-80 h-80 bottom-0 right-0 translate-x-1/3 translate-y-1/3 animate-float-delayed"></div>
+    <div class="blob bg-yellow-200 w-64 h-64 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 animate-pulse-slow"></div>
+
+    <!-- Main Container -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 relative z-10">
+        
+        <!-- Filters & Search -->
+        <div class="glass-panel rounded-2xl p-4 mb-10 shadow-lg flex flex-col items-center gap-6 mt-4">
+            
+            <!-- Filter Buttons Container -->
+            <div class="flex flex-wrap justify-center gap-2 w-full" id="filter-buttons">
+                <button onclick="filterEvents('all')" class="filter-btn active px-4 py-2 rounded-full font-bold text-sm transition-all bg-gray-800 text-white shadow-md hover:shadow-lg transform hover:-translate-y-0.5">
+                    🚀 Todos
+                </button>
+                <button onclick="filterEvents('pastoral')" class="filter-btn px-4 py-2 rounded-full font-semibold text-sm transition-all bg-white text-gray-600 border border-gray-200 shadow-sm hover:bg-indigo-100 hover:text-indigo-700">
+                    🕊️ Pastoral
+                </button>
+                <button onclick="filterEvents('bienestar')" class="filter-btn px-4 py-2 rounded-full font-semibold text-sm transition-all bg-white text-gray-600 border border-gray-200 shadow-sm hover:bg-pink-100 hover:text-pink-700">
+                    🌿 Bienestar
+                </button>
+                <button onclick="filterEvents('experiencia')" class="filter-btn px-4 py-2 rounded-full font-semibold text-sm transition-all bg-white text-gray-600 border border-gray-200 shadow-sm hover:bg-orange-100 hover:text-orange-700">
+                    ✨ Experiencia estudiantil
+                </button>
+                <button onclick="filterEvents('academia')" class="filter-btn px-4 py-2 rounded-full font-semibold text-sm transition-all bg-white text-gray-600 border border-gray-200 shadow-sm hover:bg-blue-100 hover:text-blue-700">
+                    🎓 Academia
+                </button>
+                <button onclick="filterEvents('biblioteca')" class="filter-btn px-4 py-2 rounded-full font-semibold text-sm transition-all bg-white text-gray-600 border border-gray-200 shadow-sm hover:bg-teal-100 hover:text-teal-700">
+                    📚 Biblioteca
+                </button>
+                <button onclick="filterEvents('admisiones')" class="filter-btn px-4 py-2 rounded-full font-semibold text-sm transition-all bg-white text-gray-600 border border-gray-200 shadow-sm hover:bg-purple-100 hover:text-purple-700">
+                    📋 Admisiones y Registro
+                </button>
+                 <button onclick="filterEvents('idiomas')" class="filter-btn px-4 py-2 rounded-full font-semibold text-sm transition-all bg-white text-gray-600 border border-gray-200 shadow-sm hover:bg-red-100 hover:text-red-700">
+                    🗣️ Centro de Idiomas
+                </button>
+            </div>
+
+            <!-- Search Bar -->
+            <div class="relative w-full max-w-md">
+                <i class="fas fa-search absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+                <input type="text" id="searchInput" placeholder="Buscar por nombre o lugar..." 
+                       class="w-full pl-10 pr-4 py-3 rounded-full bg-white/80 border-none focus:ring-2 focus:ring-primary focus:outline-none shadow-inner text-sm transition-all">
+            </div>
+        </div>
 
         <!-- Events Grid -->
         <div id="events-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
