@@ -93,21 +93,37 @@
         }
     </style>
 </head>
+<body class="text-gray-800 antialiased min-h-screen relative selection:bg-primary selection:text-white">
 
-        <!-- Footer (Branding) -->
-        <footer class="mt-24 mb-12 text-center border-t border-gray-200/60 pt-10">
-            <h2 class="text-3xl font-extrabold tracking-tight mb-2">
-                <span class="bg-clip-text text-transparent bg-gradient-to-r from-primary via-purple-500 to-secondary">
-                    Prográmate
-                </span>
-            </h2>
-            <p class="text-base text-gray-500 max-w-lg mx-auto">
-                Tu agenda universitaria en un solo lugar.
-                <span class="font-bold text-primary">Conecta</span>, <span class="font-bold text-secondary">Aprende</span> y <span class="font-bold text-accent">Vive</span> la U.
-            </p>
-        </footer>
+    <!-- Background Blobs -->
+    <div class="blob bg-purple-400 w-96 h-96 top-0 left-0 -translate-x-1/2 -translate-y-1/2 animate-float"></div>
+    <div class="blob bg-pink-400 w-80 h-80 bottom-0 right-0 translate-x-1/3 translate-y-1/3 animate-float-delayed"></div>
+    <div class="blob bg-yellow-200 w-64 h-64 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 animate-pulse-slow"></div>
 
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 relative z-10">
+    
+    <div id="events-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-12">
+        </div>
+
+    <div id="empty-state" class="hidden text-center py-20">
+        <div class="text-6xl mb-4">🍃</div>
+        <h3 class="text-2xl font-bold text-gray-700">No se encontraron eventos</h3>
+        <p class="text-gray-500">Intenta con otros filtros o añade uno nuevo.</p>
     </div>
+
+    <footer class="mt-24 mb-12 text-center border-t border-gray-200/60 pt-10">
+        <h2 class="text-3xl font-extrabold tracking-tight mb-2">
+            <span class="bg-clip-text text-transparent bg-gradient-to-r from-primary via-purple-500 to-secondary">
+                Prográmate
+            </span>
+        </h2>
+        <p class="text-base text-gray-500 max-w-lg mx-auto">
+            Tu agenda universitaria en un solo lugar.
+            <span class="font-bold text-primary">Conecta</span>, <span class="font-bold text-secondary">Aprende</span> y <span class="font-bold text-accent">Vive</span> la U.
+        </p>
+    </footer>
+
+</div>
 
     <!-- Floating Action Button (Add Event) -->
     <button onclick="openModal()" class="fixed bottom-8 right-8 bg-gradient-to-r from-primary to-purple-600 text-white w-16 h-16 rounded-full shadow-2xl flex items-center justify-center text-2xl hover:scale-110 transition-transform z-50 group">
@@ -124,14 +140,85 @@
             <div class="bg-white rounded-3xl shadow-2xl p-6 relative overflow-hidden">
                 <div class="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-primary to-secondary"></div>
                 
+                <h2 class="text-2xl font-bold mb-1 text-gray-800">🗓️ Crear Evento</h2>
+                <p class="text-sm text-gray-500 mb-6">Comparte una actividad con la comunidad.</p>
+
+                <form id="eventForm" onsubmit="handleAddEvent(event)">
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-xs font-bold text-gray-500 uppercase mb-1">Nombre del Evento</label>
+                            <input type="text" name="title" required class="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-2 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors" placeholder="Ej: Taller de Mindfulness">
+                        </div>
+
+                        <div class="grid grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-xs font-bold text-gray-500 uppercase mb-1">Categoría</label>
+                                <select name="category" class="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-2 focus:outline-none focus:border-primary">
+                                    <option value="pastoral">🕊️ Pastoral</option>
+                                    <option value="bienestar">🌿 Bienestar</option>
+                                    <option value="experiencia">✨ Experiencia Est.</option>
+                                    <option value="academia">🎓 Academia</option>
+                                    <option value="biblioteca">📚 Biblioteca</option>
+                                    <option value="admisiones">📋 Admisiones</option>
+                                    <option value="idiomas">🗣️ Idiomas</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-xs font-bold text-gray-500 uppercase mb-1">Fecha</label>
+                                <input type="date" name="date" required class="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-2 focus:outline-none focus:border-primary">
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-xs font-bold text-gray-500 uppercase mb-1">Hora</label>
+                                <input type="time" name="time" required class="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-2 focus:outline-none focus:border-primary">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-bold text-gray-500 uppercase mb-1">Imagen (Tema)</label>
+                                <select name="imageTheme" class="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-2 focus:outline-none focus:border-primary">
+                                    <option value="nature">Naturaleza</option>
+                                    <option value="community">Comunidad</option>
+                                    <option value="spirit">Espiritualidad</option>
+                                    <option value="food">Comida/Salud</option>
+                                    <option value="art">Arte/Creatividad</option>
+                                    <option value="tech">Tecnología/Estudio</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-bold text-gray-500 uppercase mb-1">Enlace de Inscripción</label>
+                            <input type="url" name="link" placeholder="https://..." class="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-2 focus:outline-none focus:border-primary">
+                        </div>
+                    </div>
+
+                    <div class="mt-8 flex gap-3">
+                        <button type="button" onclick="closeModal()" class="flex-1 py-3 rounded-xl border border-gray-200 text-gray-600 font-semibold hover:bg-gray-50 transition-colors">Cancelar</button>
+                        <button type="submit" class="flex-1 py-3 rounded-xl bg-primary text-white font-bold shadow-lg shadow-indigo-500/30 hover:shadow-indigo-500/50 hover:bg-indigo-600 transition-all">Guardar</button>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
 
+    <!-- Notification Toast -->
+    <div id="toast" class="fixed bottom-4 left-1/2 transform -translate-x-1/2 bg-gray-900 text-white px-6 py-3 rounded-full shadow-2xl flex items-center gap-3 transition-all duration-300 translate-y-20 opacity-0 z-50">
+        <i class="fas fa-check-circle text-green-400"></i>
+        <span class="font-medium">Evento agregado con éxito</span>
+    </div>
 
     <!-- Logic -->
     <script>
         // --- Configuration ---
         const categoryConfig = {
+            pastoral: { label: 'Pastoral', icon: 'fa-dove', colorClass: 'bg-indigo-500 text-white' },
+            bienestar: { label: 'Bienestar', icon: 'fa-leaf', colorClass: 'bg-pink-500 text-white' },
+            experiencia: { label: 'Experiencia', icon: 'fa-sparkles', colorClass: 'bg-orange-500 text-white' },
+            academia: { label: 'Academia', icon: 'fa-graduation-cap', colorClass: 'bg-blue-600 text-white' },
+            biblioteca: { label: 'Biblioteca', icon: 'fa-book-open', colorClass: 'bg-teal-600 text-white' },
+            admisiones: { label: 'Admisiones', icon: 'fa-id-card', colorClass: 'bg-purple-600 text-white' },
+            idiomas: { label: 'Idiomas', icon: 'fa-language', colorClass: 'bg-red-500 text-white' },
             // Default fallback
             default: { label: 'Evento', icon: 'fa-calendar-day', colorClass: 'bg-gray-600 text-white' }
         };
@@ -310,6 +397,13 @@
                 if (category === btnCategory) {
                     // Active state logic per category for a nice colorful effect
                     if (category === 'all') classes += "bg-gray-800 text-white shadow-lg active -translate-y-0.5";
+                    else if (category === 'pastoral') classes += "bg-indigo-500 text-white shadow-lg active -translate-y-0.5";
+                    else if (category === 'bienestar') classes += "bg-pink-500 text-white shadow-lg active -translate-y-0.5";
+                    else if (category === 'experiencia') classes += "bg-orange-500 text-white shadow-lg active -translate-y-0.5";
+                    else if (category === 'academia') classes += "bg-blue-600 text-white shadow-lg active -translate-y-0.5";
+                    else if (category === 'biblioteca') classes += "bg-teal-600 text-white shadow-lg active -translate-y-0.5";
+                    else if (category === 'admisiones') classes += "bg-purple-600 text-white shadow-lg active -translate-y-0.5";
+                    else if (category === 'idiomas') classes += "bg-red-500 text-white shadow-lg active -translate-y-0.5";
                 } else {
                     // Inactive state
                     classes += "bg-white text-gray-600 border border-gray-200 hover:shadow-md";
