@@ -103,23 +103,6 @@
     <!-- Main Container -->
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 relative z-10">
         
-        <!-- Filters & Search -->
-        <div class="glass-panel rounded-2xl p-4 mb-10 shadow-lg flex flex-col items-center gap-6 mt-4">
-            
-            <!-- Filter Buttons Container -->
-            <div class="flex flex-wrap justify-center gap-2 w-full" id="filter-buttons">
-                <button onclick="filterEvents('all')" class="filter-btn active px-4 py-2 rounded-full font-bold text-sm transition-all bg-gray-800 text-white shadow-md hover:shadow-lg transform hover:-translate-y-0.5">
-                    🚀 Todos
-                </button>
-            </div>
-
-            <!-- Search Bar -->
-            <div class="relative w-full max-w-md">
-                <i class="fas fa-search absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
-                <input type="text" id="searchInput" placeholder="Buscar por nombre o lugar..." 
-                       class="w-full pl-10 pr-4 py-3 rounded-full bg-white/80 border-none focus:ring-2 focus:ring-primary focus:outline-none shadow-inner text-sm transition-all">
-            </div>
-        </div>
 
         <!-- Events Grid -->
         <div id="events-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -163,13 +146,6 @@
             <div class="bg-white rounded-3xl shadow-2xl p-6 relative overflow-hidden">
                 <div class="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-primary to-secondary"></div>
                 
-
-                    <div class="mt-8 flex gap-3">
-                        <button type="button" onclick="closeModal()" class="flex-1 py-3 rounded-xl border border-gray-200 text-gray-600 font-semibold hover:bg-gray-50 transition-colors">Cancelar</button>
-                        <button type="submit" class="flex-1 py-3 rounded-xl bg-primary text-white font-bold shadow-lg shadow-indigo-500/30 hover:shadow-indigo-500/50 hover:bg-indigo-600 transition-all">Guardar</button>
-                    </div>
-                </form>
-            </div>
         </div>
     </div>
 
