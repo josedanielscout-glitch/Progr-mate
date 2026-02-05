@@ -74,16 +74,18 @@
             box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.07);
             transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             position: relative;
-            overflow: hidden; /* Essential for the shine effect */
+            overflow: hidden; 
         }
 
         .glass-card:hover {
-            transform: translateY(-10px) scale(1.02);
-            background: rgba(255, 255, 255, 0.9);
+            transform: translateY(-8px) scale(1.02);
+            background: rgba(255, 255, 255, 0.95);
             border-color: rgba(255, 255, 255, 1);
+            z-index: 10;
+            box-shadow: 0 20px 40px -5px rgba(0,0,0,0.1);
         }
 
-        /* Efecto de Brillo (Shine) en la Tarjeta */
+        /* Shine Effect */
         .glass-card::after {
             content: "";
             position: absolute;
@@ -119,7 +121,7 @@
             border-radius: 50%;
             filter: blur(80px);
             opacity: 0.8;
-            mix-blend-mode: multiply; /* Creates the watercolor effect */
+            mix-blend-mode: multiply; 
             animation: blob 15s infinite alternate;
         }
 
@@ -151,35 +153,36 @@
     </div>
 
     <!-- Main Container -->
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 relative z-10">
+    <div class="max-w-7xl mx-auto px-2 sm:px-4 md:px-6 lg:px-8 py-12 relative z-10">
         
-        <!-- Header (Animated Title) -->
-        <header class="mb-16 text-center opacity-0 animate-fade-up">
-            <h1 class="text-5xl md:text-7xl font-extrabold tracking-tight mb-4">
+        <!-- Header -->
+        <header class="mb-8 md:mb-12 text-center opacity-0 animate-fade-up">
+            <h1 class="text-3xl md:text-5xl lg:text-7xl font-extrabold tracking-tight mb-4">
                 <span class="bg-clip-text text-transparent bg-gradient-to-r from-primary via-purple-500 to-secondary animate-text-shimmer bg-[length:200%_auto]">
                     Agenda de Eventos
                 </span>
             </h1>
-            <div class="h-1 w-24 bg-gradient-to-r from-primary to-secondary mx-auto rounded-full"></div>
+            <div class="h-1 w-16 md:w-24 bg-gradient-to-r from-primary to-secondary mx-auto rounded-full"></div>
         </header>
 
         <!-- Events Grid (Fixed 3 columns always) -->
-        <div id="events-grid" class="grid grid-cols-3 gap-6">
+        <!-- Usamos gap-2 en móviles para que quepan, y gap-8 en desktop -->
+        <div id="events-grid" class="grid grid-cols-3 gap-2 sm:gap-4 md:gap-6 lg:gap-8">
             <!-- Cards will be injected here via JS -->
         </div>
 
-        <!-- Empty State (Hidden by default) -->
+        <!-- Empty State -->
         <div id="empty-state" class="hidden text-center py-20">
-            <div class="text-6xl mb-4 text-gray-300">🍃</div>
-            <h3 class="text-2xl font-bold text-gray-400">Todo tranquilo por aquí...</h3>
+            <div class="text-4xl md:text-6xl mb-4 text-gray-300">🍃</div>
+            <h3 class="text-xl md:text-2xl font-bold text-gray-400">Todo tranquilo por aquí...</h3>
         </div>
 
-        <!-- Footer (Branding) -->
-        <footer class="mt-32 mb-12 text-center border-t border-gray-200/60 pt-12 opacity-0 animate-fade-up" style="animation-delay: 0.5s">
-            <h2 class="text-4xl font-extrabold tracking-tight mb-3">
+        <!-- Footer -->
+        <footer class="mt-20 mb-12 text-center border-t border-gray-200/60 pt-12 opacity-0 animate-fade-up" style="animation-delay: 0.5s">
+            <h2 class="text-2xl md:text-4xl font-extrabold tracking-tight mb-3">
                 <span class="text-gray-800">Prográ</span><span class="text-primary">mate</span>
             </h2>
-            <p class="text-lg text-gray-500 max-w-lg mx-auto font-light">
+            <p class="text-xs md:text-lg text-gray-500 max-w-lg mx-auto font-light">
                 Tu agenda universitaria en un solo lugar.<br>
                 <span class="font-semibold text-gray-700">Conecta</span> • <span class="font-semibold text-gray-700">Aprende</span> • <span class="font-semibold text-gray-700">Vive</span>
             </p>
@@ -206,27 +209,27 @@
         const initialEvents = [
             { 
                 id: 1, 
-                title: "Sembratón Universitaria", 
-                description: "Únete a la jornada de reforestación y ayuda a plantar más de 50 árboles nativos.",
-                category: "ecologica", 
-                date: "2024-03-15", 
-                time: "08:00", 
-                image: "https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?q=80&w=1000&auto=format&fit=crop", 
-                link: "#", 
-                location: "Jardín Botánico",
-                cta: "Inscríbete"
+                title: "Eucaristía diaria", 
+                description: "Participa de la Santa Misa de lunes a viernes.",
+                category: "espiritual", 
+                date: "2026-02-06", 
+                time: "12:00", 
+                image: "https://images.unsplash.com/photo-1549508477-3e484818ba7d?q=80&w=1000&auto=format&fit=crop", 
+                link: "https://www.facebook.com/SoyCatolicaDelNorte/live_videos", 
+                location: "Facebook Live",
+                cta: "Participa"
             },
             { 
                 id: 2, 
-                title: "Festival de Teatro", 
-                description: "Disfruta de las mejores obras interpretadas por el grupo de teatro universitario.",
-                category: "cultural", 
-                date: "2024-03-18", 
-                time: "16:30", 
-                image: "https://images.unsplash.com/photo-1503095392269-27528ca388ec?q=80&w=1000&auto=format&fit=crop", 
-                link: "#", 
-                location: "Auditorio Principal",
-                cta: "Ver programación"
+                title: "Inscripciones Abiertas: Semilleros de Ajedrez", 
+                description: "Niveles: Básico, Intermedio y Avanzado.",
+                category: "fisica", 
+                date: "2026-02-20", 
+                time: "23:59", 
+                image: "https://images.unsplash.com/photo-1529699211952-734e80c4d42b?q=80&w=1000&auto=format&fit=crop", 
+                link: "https://encuestas.ucn.edu.co/index.php/544484?lang=es", 
+                location: "Teams",
+                cta: "Inscríbete"
             },
             { 
                 id: 3, 
@@ -250,7 +253,7 @@
                 image: "https://images.unsplash.com/photo-1507692049790-de58293a469d?q=80&w=1000&auto=format&fit=crop", 
                 link: "#", 
                 location: "Teams",
-                cta: "Unirse a reunión"
+                cta: "Unirse"
             },
             { 
                 id: 5, 
@@ -274,7 +277,7 @@
                 image: "https://images.unsplash.com/photo-1517486808906-6ca8b3f04846?q=80&w=1000&auto=format&fit=crop", 
                 link: "#", 
                 location: "Biblioteca",
-                cta: "Agendar cita"
+                cta: "Agendar"
             },
             { 
                 id: 7, 
@@ -320,64 +323,73 @@
                     const config = categoryConfig[event.category] || categoryConfig.default;
                     
                     const card = document.createElement('div');
-                    // Added animation delay for cascade effect
                     card.style.animationDelay = `${index * 150}ms`;
-                    card.className = 'glass-card rounded-[2rem] overflow-hidden flex flex-col h-full group opacity-0 animate-fade-up border-transparent';
+                    
+                    // Clases responsivas para el contenedor
+                    // rounded-xl en móvil, rounded-[2rem] en desktop
+                    card.className = 'glass-card rounded-xl md:rounded-[2rem] overflow-hidden flex flex-col w-full h-full group opacity-0 animate-fade-up border-transparent';
                     
                     card.innerHTML = `
-                        <div class="h-40 overflow-hidden relative"> <!-- Altura reducida de h-52 a h-40 -->
-                            <!-- Zoom effect on hover -->
+                        <!-- Imagen: aspect-square en móviles para ahorrar altura, aspect-video en desktop -->
+                        <div class="relative w-full aspect-[4/3] md:h-48 md:aspect-auto overflow-hidden shrink-0">
                             <img src="${event.image}" alt="${event.title}" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
                             
                             <!-- Modern Overlay -->
                             <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-80"></div>
 
-                            <!-- Category Badge -->
-                            <div class="absolute top-4 right-4 bg-white/90 backdrop-blur-sm text-xs font-bold px-3 py-1.5 rounded-full shadow-lg flex items-center gap-1.5 text-gray-800 border border-white z-10">
-                                <i class="fas ${config.icon} text-${config.color}-500"></i> ${config.label}
+                            <!-- Category Badge: Muy pequeño en móvil, normal en desktop -->
+                            <div class="absolute top-2 right-2 md:top-4 md:right-4 bg-white/90 backdrop-blur-sm text-[8px] md:text-xs font-bold px-2 py-1 md:px-3 md:py-1.5 rounded-full shadow-lg flex items-center gap-1 md:gap-1.5 text-gray-800 border border-white z-10">
+                                <i class="fas ${config.icon} text-${config.color}-500 text-[8px] md:text-xs"></i> 
+                                <span class="hidden md:inline">${config.label}</span> <!-- Ocultar texto largo en móvil si es necesario, o dejarlo -->
+                                <span class="md:hidden truncate max-w-[50px]">${config.label}</span>
                             </div>
                         </div>
                         
-                        <div class="p-5 flex-1 flex flex-col relative bg-white/40"> <!-- Padding reducido de p-6 a p-5 -->
-                            <!-- Floating Date Ticket -->
-                            <div class="absolute -top-6 left-6 bg-white rounded-xl shadow-[0_8px_16px_rgba(0,0,0,0.1)] p-1 text-center w-14 h-14 flex flex-col justify-center items-center border border-gray-100 group-hover:-translate-y-2 transition-transform duration-300 z-10">
-                                <span class="text-[9px] font-bold text-gray-400 uppercase tracking-widest leading-none mb-0.5">${getMonth(event.date)}</span>
-                                <span class="text-xl font-black text-gray-800 leading-none">${getDay(event.date)}</span>
+                        <!-- Contenido: Padding muy reducido en móvil (p-2), normal en desktop (p-6) -->
+                        <div class="p-2 md:p-6 flex-1 flex flex-col relative bg-white/40">
+                            
+                            <!-- Fecha Flotante: Escala reducida en móvil -->
+                            <div class="absolute -top-4 md:-top-8 left-2 md:left-6 bg-white rounded-lg md:rounded-xl shadow-md p-0.5 md:p-1 text-center w-10 h-10 md:w-16 md:h-16 flex flex-col justify-center items-center border border-gray-100 group-hover:-translate-y-1 md:group-hover:-translate-y-2 transition-transform duration-300 z-10">
+                                <span class="text-[7px] md:text-[10px] font-bold text-gray-400 uppercase tracking-widest leading-none mb-px md:mb-0.5">${getMonth(event.date)}</span>
+                                <span class="text-sm md:text-2xl font-black text-gray-800 leading-none">${getDay(event.date)}</span>
                             </div>
 
-                            <!-- Title -->
-                            <div class="mt-8 mb-2"> <!-- Margen ajustado -->
-                                <h3 class="text-lg font-bold text-gray-800 leading-tight group-hover:text-${config.color}-600 transition-colors duration-300">${event.title}</h3>
+                            <!-- Título: Texto pequeño en móvil, grande en desktop -->
+                            <div class="mt-7 md:mt-8 mb-1 md:mb-2">
+                                <h3 class="text-[11px] md:text-xl font-bold text-gray-800 leading-tight group-hover:text-${config.color}-600 transition-colors duration-300 line-clamp-2" title="${event.title}">
+                                    ${event.title}
+                                </h3>
                             </div>
 
-                            <!-- Description (NEW) -->
-                            <div class="mb-3">
-                                <p class="text-sm text-gray-500 font-medium leading-relaxed line-clamp-2">
-                                    ${event.description || 'Descripción breve del evento disponible próximamente.'}
+                            <!-- Descripción: Oculta o muy pequeña en móvil -->
+                            <div class="mb-2 md:mb-4 hidden md:block">
+                                <p class="text-[10px] md:text-sm text-gray-500 font-medium leading-relaxed line-clamp-2">
+                                    ${event.description || 'Descripción breve disponible.'}
                                 </p>
                             </div>
                             
-                            <!-- Updated Info (Responsive Flex Wrap) -->
-                            <div class="flex flex-wrap items-center gap-y-2 gap-x-3 mb-4 text-xs text-gray-500 font-medium">
-                                <div class="flex items-center gap-2 group/item p-1 rounded-lg transition-colors hover:bg-white/50 shrink-0">
-                                    <div class="w-8 h-8 rounded-full bg-white flex items-center justify-center shadow-sm text-gray-400 text-sm group-hover:text-${config.color}-500 transition-colors shrink-0">
+                            <!-- Info: Iconos pequeños, layout apretado en móvil -->
+                            <div class="flex flex-col md:flex-row md:flex-wrap md:items-center gap-1 md:gap-x-4 md:gap-y-2 mb-2 md:mb-4 text-[9px] md:text-sm text-gray-500 font-medium">
+                                <div class="flex items-center gap-1 md:gap-2 group/item rounded-lg transition-colors hover:bg-white/50">
+                                    <div class="w-4 h-4 md:w-9 md:h-9 rounded-full bg-white flex items-center justify-center shadow-sm text-gray-400 text-[8px] md:text-base group-hover:text-${config.color}-500 transition-colors shrink-0">
                                         <i class="far fa-clock"></i>
                                     </div>
-                                    <span class="text-sm font-bold text-gray-700 whitespace-nowrap">${formatTime(event.time)}</span>
+                                    <span class="font-bold text-gray-700 whitespace-nowrap">${formatTime(event.time)}</span>
                                 </div>
-                                <div class="flex items-center gap-2 group/item p-1 rounded-lg transition-colors hover:bg-white/50 min-w-0">
-                                    <div class="w-8 h-8 rounded-full bg-white flex items-center justify-center shadow-sm text-gray-400 text-sm group-hover:text-${config.color}-500 transition-colors shrink-0">
+                                <div class="flex items-center gap-1 md:gap-2 group/item rounded-lg transition-colors hover:bg-white/50">
+                                    <div class="w-4 h-4 md:w-9 md:h-9 rounded-full bg-white flex items-center justify-center shadow-sm text-gray-400 text-[8px] md:text-base group-hover:text-${config.color}-500 transition-colors shrink-0">
                                         <i class="fas fa-link"></i>
                                     </div>
-                                    <!-- Dynamic Location Text with Truncate -->
-                                    <span class="text-sm font-bold text-gray-700 truncate">${event.location || 'Campus'}</span>
+                                    <span class="font-bold text-gray-700 truncate max-w-[70px] md:max-w-none">${event.location || 'Campus'}</span>
                                 </div>
                             </div>
                             
+                            <!-- Botón: Compacto en móvil -->
                             <div class="mt-auto relative z-20">
-                                <a href="${event.link}" target="_blank" class="btn-shine relative overflow-hidden w-full block text-center text-white font-bold py-2.5 rounded-xl transition-all duration-300 transform group-hover:scale-[1.02] shadow-md group-hover:shadow-lg bg-gradient-to-r ${config.gradient}">
-                                    <span class="relative z-10 flex items-center justify-center gap-2 text-sm">
-                                        ${event.cta || 'Participa'} <i class="fas fa-arrow-right text-xs transition-transform group-hover:translate-x-1"></i>
+                                <a href="${event.link}" target="_blank" class="btn-shine relative overflow-hidden w-full block text-center text-white font-bold py-1.5 md:py-3 rounded-lg md:rounded-2xl transition-all duration-300 transform group-hover:scale-[1.02] shadow-sm md:shadow-md group-hover:shadow-lg bg-gradient-to-r ${config.gradient}">
+                                    <span class="relative z-10 flex items-center justify-center gap-1 md:gap-2">
+                                        <span class="text-[9px] md:text-base">${event.cta || 'Participa'}</span> 
+                                        <i class="fas fa-arrow-right text-[8px] md:text-sm transition-transform group-hover:translate-x-1"></i>
                                     </span>
                                 </a>
                             </div>
@@ -388,7 +400,6 @@
             }
         };
 
-        // Initialize
         renderEvents();
 
     </script>
