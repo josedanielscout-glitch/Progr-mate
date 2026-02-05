@@ -212,7 +212,7 @@
                 title: "Eucaristía diaria", 
                 description: "Participa de la Santa Misa de lunes a viernes.",
                 category: "espiritual", 
-                date: "2026-02-06", 
+                date: "#", 
                 time: "12:00", 
                 image: "https://images.unsplash.com/photo-1549508477-3e484818ba7d?q=80&w=1000&auto=format&fit=crop", 
                 link: "https://www.facebook.com/SoyCatolicaDelNorte/live_videos", 
@@ -250,34 +250,34 @@
                 category: "acompanamiento", 
                 date: "2026-02-06", 
                 time: "17:00", 
-                image: "https://images.unsplash.com/photo-1683887034491-f58b4c4fca72?q=80&w=1000&auto=format&fit=crop", 
-                link: "https://teams.microsoft.com/meet/27370211625455?p=CEexn0Sq7a7YjClOYj", 
-                location: "Teams",
-                cta: "Conéctate"
-            },
-            { 
-                id: 5, 
-                title: "Asesoría de CANVAS", 
-                description: "Aprende a utilizar el aula virtual.",
-                category: "acompanamiento", 
-                date: "2026-02-09", 
-                time: "19:00", 
                 image: "https://images.unsplash.com/photo-1770268575689-fd52d232aa5a?q=80&w=1000&auto=format&fit=crop", 
                 link: "https://teams.microsoft.com/meet/27370211625455?p=CEexn0Sq7a7YjClOYj", 
                 location: "Teams",
                 cta: "Conéctate"
             },
             { 
-                id: 6, 
-                title: "Jornada Mundial del Enfermo", 
-                description: "“La compasión del samaritano: amar llevando el dolor del otro”.",
-                category: "espiritual", 
-                date: "2024-02-11", 
-                time: "12:00", 
-                image: "https://images.unsplash.com/photo-1681995196904-469e3cb8089f?q=80&w=1000&auto=format&fit=crop", 
+                id: 5, 
+                title: "Taller: Gestión de Emociones", 
+                description: "Aprende herramientas prácticas para manejar el estrés y la ansiedad académica.",
+                category: "psicoafectiva", 
+                date: "2024-03-25", 
+                time: "14:00", 
+                image: "https://images.unsplash.com/photo-1499209974431-9dac3adaf471?q=80&w=1000&auto=format&fit=crop", 
                 link: "#", 
-                location: "Contenido Interactivo",
-                cta: "Próximamente"
+                location: "Facebook Live",
+                cta: "Ver en vivo"
+            },
+            { 
+                id: 6, 
+                title: "Mentoría de Pares", 
+                description: "Sesión de acompañamiento académico con estudiantes de semestres avanzados.",
+                category: "acompanamiento", 
+                date: "2024-03-28", 
+                time: "11:00", 
+                image: "https://images.unsplash.com/photo-1517486808906-6ca8b3f04846?q=80&w=1000&auto=format&fit=crop", 
+                link: "#", 
+                location: "Biblioteca",
+                cta: "Agendar"
             },
             { 
                 id: 7, 
@@ -327,48 +327,49 @@
                     
                     // Clases responsivas para el contenedor
                     // rounded-xl en móvil, rounded-[2rem] en desktop
+                    // h-full para que ocupe todo el alto disponible en la fila
                     card.className = 'glass-card rounded-xl md:rounded-[2rem] overflow-hidden flex flex-col w-full h-full group opacity-0 animate-fade-up border-transparent';
                     
                     card.innerHTML = `
-                        <!-- Imagen: aspect-square en móviles para ahorrar altura, aspect-video en desktop -->
+                        <!-- Imagen: relación de aspecto 4/3 para dar espacio vertical -->
                         <div class="relative w-full aspect-[4/3] md:h-48 md:aspect-auto overflow-hidden shrink-0">
                             <img src="${event.image}" alt="${event.title}" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
                             
                             <!-- Modern Overlay -->
                             <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-80"></div>
 
-                            <!-- Category Badge: Muy pequeño en móvil, normal en desktop -->
+                            <!-- Category Badge: Pequeño pero legible -->
                             <div class="absolute top-2 right-2 md:top-4 md:right-4 bg-white/90 backdrop-blur-sm text-[8px] md:text-xs font-bold px-2 py-1 md:px-3 md:py-1.5 rounded-full shadow-lg flex items-center gap-1 md:gap-1.5 text-gray-800 border border-white z-10">
                                 <i class="fas ${config.icon} text-${config.color}-500 text-[8px] md:text-xs"></i> 
-                                <span class="hidden md:inline">${config.label}</span> <!-- Ocultar texto largo en móvil si es necesario, o dejarlo -->
+                                <span class="hidden md:inline">${config.label}</span> 
                                 <span class="md:hidden truncate max-w-[50px]">${config.label}</span>
                             </div>
                         </div>
                         
-                        <!-- Contenido: Padding muy reducido en móvil (p-2), normal en desktop (p-6) -->
+                        <!-- Contenido: Padding ajustado -->
                         <div class="p-2 md:p-6 flex-1 flex flex-col relative bg-white/40">
                             
-                            <!-- Fecha Flotante: Escala reducida en móvil -->
+                            <!-- Fecha Flotante -->
                             <div class="absolute -top-4 md:-top-8 left-2 md:left-6 bg-white rounded-lg md:rounded-xl shadow-md p-0.5 md:p-1 text-center w-10 h-10 md:w-16 md:h-16 flex flex-col justify-center items-center border border-gray-100 group-hover:-translate-y-1 md:group-hover:-translate-y-2 transition-transform duration-300 z-10">
                                 <span class="text-[7px] md:text-[10px] font-bold text-gray-400 uppercase tracking-widest leading-none mb-px md:mb-0.5">${getMonth(event.date)}</span>
                                 <span class="text-sm md:text-2xl font-black text-gray-800 leading-none">${getDay(event.date)}</span>
                             </div>
 
-                            <!-- Título: Texto pequeño en móvil, grande en desktop -->
+                            <!-- Título: Permitimos más líneas en móvil -->
                             <div class="mt-7 md:mt-8 mb-1 md:mb-2">
-                                <h3 class="text-[11px] md:text-xl font-bold text-gray-800 leading-tight group-hover:text-${config.color}-600 transition-colors duration-300 line-clamp-2" title="${event.title}">
+                                <h3 class="text-[10px] md:text-xl font-bold text-gray-800 leading-tight group-hover:text-${config.color}-600 transition-colors duration-300 line-clamp-3 md:line-clamp-2" title="${event.title}">
                                     ${event.title}
                                 </h3>
                             </div>
 
-                            <!-- Descripción: Oculta o muy pequeña en móvil -->
-                            <div class="mb-2 md:mb-4 hidden md:block">
-                                <p class="text-[10px] md:text-sm text-gray-500 font-medium leading-relaxed line-clamp-2">
+                            <!-- Descripción: Visible en móvil ahora -->
+                            <div class="mb-2 md:mb-4">
+                                <p class="text-[9px] md:text-sm text-gray-500 font-medium leading-relaxed line-clamp-3 md:line-clamp-2">
                                     ${event.description || 'Descripción breve disponible.'}
                                 </p>
                             </div>
                             
-                            <!-- Info: Iconos pequeños, layout apretado en móvil -->
+                            <!-- Info: Iconos pequeños, layout en columna para móvil para ahorrar ancho -->
                             <div class="flex flex-col md:flex-row md:flex-wrap md:items-center gap-1 md:gap-x-4 md:gap-y-2 mb-2 md:mb-4 text-[9px] md:text-sm text-gray-500 font-medium">
                                 <div class="flex items-center gap-1 md:gap-2 group/item rounded-lg transition-colors hover:bg-white/50">
                                     <div class="w-4 h-4 md:w-9 md:h-9 rounded-full bg-white flex items-center justify-center shadow-sm text-gray-400 text-[8px] md:text-base group-hover:text-${config.color}-500 transition-colors shrink-0">
