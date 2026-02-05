@@ -206,25 +206,24 @@
         const initialEvents = [
             { 
                 id: 1, 
-                title: "Sembratón Universitaria", 
-                description: "Únete a la jornada de reforestación y ayuda a plantar más de 50 árboles nativos.",
-                category: "ecologica", 
-                date: "2024-03-15", 
-                time: "08:00", 
-                image: "https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?q=80&w=1000&auto=format&fit=crop", 
-                link: "#", 
-                location: "Jardín Botánico" 
+                title: "Eucaristía diaria", 
+                description: "Participa de la Santa Misa de lunes a viernes",
+                category: "espiritual", 
+                time: "12:00", 
+                image: "https://images.unsplash.com/photo-1549508477-3e484818ba7d?q=80&w=1000&auto=format&fit=crop", 
+                link: "https://www.facebook.com/SoyCatolicaDelNorte/live_videos", 
+                location: "Facebook Live",
+                cta: "Participa"
             },
             { 
                 id: 2, 
-                title: "Festival de Teatro", 
-                description: "Disfruta de las mejores obras interpretadas por el grupo de teatro universitario.",
-                category: "cultural", 
-                date: "2024-03-18", 
-                time: "16:30", 
-                image: "https://images.unsplash.com/photo-1503095392269-27528ca388ec?q=80&w=1000&auto=format&fit=crop", 
-                link: "#", 
-                location: "Auditorio Principal" 
+                title: "Inscripciones Abiertas: Semilleros de Ajedrez", 
+                description: "Clases semanales / Para todas las edades y niveles: Básico, Intermedio y Avanzado",
+                category: "fisica", 
+                date: "2026-02-20", 
+                image: "https://images.unsplash.com/photo-1529699211952-734e80c4d42b?q=80&w=1000&auto=format&fit=crop", 
+                link: "https://encuestas.ucn.edu.co/index.php/544484?lang=es", 
+                cta: "Inscríbete"
             },
             { 
                 id: 3, 
@@ -235,7 +234,8 @@
                 time: "10:00", 
                 image: "https://images.unsplash.com/photo-1556761175-5973dc0f32e7?q=80&w=1000&auto=format&fit=crop", 
                 link: "#", 
-                location: "Plazoleta Central" 
+                location: "Plazoleta Central",
+                cta: "Participa"
             },
             { 
                 id: 4, 
@@ -246,7 +246,8 @@
                 time: "07:00", 
                 image: "https://images.unsplash.com/photo-1507692049790-de58293a469d?q=80&w=1000&auto=format&fit=crop", 
                 link: "#", 
-                location: "Teams" 
+                location: "Teams",
+                cta: "Unirse a reunión"
             },
             { 
                 id: 5, 
@@ -257,7 +258,8 @@
                 time: "14:00", 
                 image: "https://images.unsplash.com/photo-1499209974431-9dac3adaf471?q=80&w=1000&auto=format&fit=crop", 
                 link: "#", 
-                location: "Facebook Live" 
+                location: "Facebook Live",
+                cta: "Ver en vivo"
             },
             { 
                 id: 6, 
@@ -268,7 +270,8 @@
                 time: "11:00", 
                 image: "https://images.unsplash.com/photo-1517486808906-6ca8b3f04846?q=80&w=1000&auto=format&fit=crop", 
                 link: "#", 
-                location: "Biblioteca" 
+                location: "Biblioteca",
+                cta: "Agendar cita"
             },
             { 
                 id: 7, 
@@ -279,7 +282,8 @@
                 time: "07:00", 
                 image: "https://images.unsplash.com/photo-1552674605-46d53b925b4b?q=80&w=1000&auto=format&fit=crop", 
                 link: "#", 
-                location: "Pista Atlética" 
+                location: "Pista Atlética",
+                cta: "Próximamente"
             }
         ];
 
@@ -370,7 +374,7 @@
                             <div class="mt-auto relative z-20">
                                 <a href="${event.link}" target="_blank" class="btn-shine relative overflow-hidden w-full block text-center text-white font-bold py-3 rounded-2xl transition-all duration-300 transform group-hover:scale-[1.02] shadow-md group-hover:shadow-lg bg-gradient-to-r ${config.gradient}">
                                     <span class="relative z-10 flex items-center justify-center gap-2">
-                                        Participa <i class="fas fa-arrow-right text-sm transition-transform group-hover:translate-x-1"></i>
+                                        ${event.cta || 'Participa'} <i class="fas fa-arrow-right text-sm transition-transform group-hover:translate-x-1"></i>
                                     </span>
                                 </a>
                             </div>
