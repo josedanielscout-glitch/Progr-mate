@@ -73,6 +73,8 @@
             border: 1px solid rgba(255, 255, 255, 0.8);
             box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.07);
             transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            overflow: hidden; /* Essential for the shine effect */
         }
 
         .glass-card:hover {
@@ -202,13 +204,83 @@
 
         // --- Data ---
         const initialEvents = [
-            { id: 1, title: "Inscripción a los semilleros de Ajedrez (Básico, medio y avanzado)", category: "fisica", date: "2026-02-20", time: "23:59", image: "https://images.unsplash.com/photo-1529699211952-734e80c4d42b?q=80&w=1000&auto=format&fit=crop", link: "https://encuestas.ucn.edu.co/index.php/544484?lang=es", location: "Jardín Botánico" },
-            { id: 2, title: "Eucaristía diaria", category: "espiritual", date: "Lunes a viernes", time: "12:00", image: "https://images.unsplash.com/photo-1549508477-3e484818ba7d?q=80&w=1000&auto=format&fit=crop", link: "#", location: "Facebook" },
-            { id: 3, title: "Feria de Emprendimiento", category: "socioeconomica", date: "2024-03-20", time: "10:00", image: "https://images.unsplash.com/photo-1556761175-5973dc0f32e7?q=80&w=1000&auto=format&fit=crop", link: "#", location: "Plazoleta Central" },
-            { id: 4, title: "Retiro de Silencio", category: "espiritual", date: "2024-03-22", time: "07:00", image: "https://images.unsplash.com/photo-1507692049790-de58293a469d?q=80&w=1000&auto=format&fit=crop", link: "#", location: "Capilla" },
-            { id: 5, title: "Taller: Gestión de Emociones", category: "psicoafectiva", date: "2024-03-25", time: "14:00", image: "https://images.unsplash.com/photo-1499209974431-9dac3adaf471?q=80&w=1000&auto=format&fit=crop", link: "#", location: "Sala de Bienestar" },
-            { id: 6, title: "Mentoría de Pares", category: "acompanamiento", date: "2024-03-28", time: "11:00", image: "https://images.unsplash.com/photo-1517486808906-6ca8b3f04846?q=80&w=1000&auto=format&fit=crop", link: "#", location: "Biblioteca" },
-            { id: 7, title: "Carrera 5K por la Salud", category: "fisica", date: "2024-04-05", time: "07:00", image: "https://images.unsplash.com/photo-1552674605-46d53b925b4b?q=80&w=1000&auto=format&fit=crop", link: "#", location: "Pista Atlética" }
+            { 
+                id: 1, 
+                title: "Sembratón Universitaria", 
+                description: "Únete a la jornada de reforestación y ayuda a plantar más de 50 árboles nativos.",
+                category: "ecologica", 
+                date: "2024-03-15", 
+                time: "08:00", 
+                image: "https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?q=80&w=1000&auto=format&fit=crop", 
+                link: "#", 
+                location: "Jardín Botánico" 
+            },
+            { 
+                id: 2, 
+                title: "Festival de Teatro", 
+                description: "Disfruta de las mejores obras interpretadas por el grupo de teatro universitario.",
+                category: "cultural", 
+                date: "2024-03-18", 
+                time: "16:30", 
+                image: "https://images.unsplash.com/photo-1503095392269-27528ca388ec?q=80&w=1000&auto=format&fit=crop", 
+                link: "#", 
+                location: "Auditorio Principal" 
+            },
+            { 
+                id: 3, 
+                title: "Feria de Emprendimiento", 
+                description: "Conoce los proyectos innovadores de tus compañeros y apoya el talento local.",
+                category: "socioeconomica", 
+                date: "2024-03-20", 
+                time: "10:00", 
+                image: "https://images.unsplash.com/photo-1556761175-5973dc0f32e7?q=80&w=1000&auto=format&fit=crop", 
+                link: "#", 
+                location: "Plazoleta Central" 
+            },
+            { 
+                id: 4, 
+                title: "Retiro de Silencio", 
+                description: "Un espacio para desconectar del ruido y reconectar contigo mismo.",
+                category: "espiritual", 
+                date: "2024-03-22", 
+                time: "07:00", 
+                image: "https://images.unsplash.com/photo-1507692049790-de58293a469d?q=80&w=1000&auto=format&fit=crop", 
+                link: "#", 
+                location: "Teams" 
+            },
+            { 
+                id: 5, 
+                title: "Taller: Gestión de Emociones", 
+                description: "Aprende herramientas prácticas para manejar el estrés y la ansiedad académica.",
+                category: "psicoafectiva", 
+                date: "2024-03-25", 
+                time: "14:00", 
+                image: "https://images.unsplash.com/photo-1499209974431-9dac3adaf471?q=80&w=1000&auto=format&fit=crop", 
+                link: "#", 
+                location: "Facebook Live" 
+            },
+            { 
+                id: 6, 
+                title: "Mentoría de Pares", 
+                description: "Sesión de acompañamiento académico con estudiantes de semestres avanzados.",
+                category: "acompanamiento", 
+                date: "2024-03-28", 
+                time: "11:00", 
+                image: "https://images.unsplash.com/photo-1517486808906-6ca8b3f04846?q=80&w=1000&auto=format&fit=crop", 
+                link: "#", 
+                location: "Biblioteca" 
+            },
+            { 
+                id: 7, 
+                title: "Carrera 5K por la Salud", 
+                description: "¡Corre por tu bienestar! Un evento deportivo para toda la comunidad universitaria.",
+                category: "fisica", 
+                date: "2024-04-05", 
+                time: "07:00", 
+                image: "https://images.unsplash.com/photo-1552674605-46d53b925b4b?q=80&w=1000&auto=format&fit=crop", 
+                link: "#", 
+                location: "Pista Atlética" 
+            }
         ];
 
         let events = [...initialEvents];
@@ -266,11 +338,19 @@
                                 <span class="text-2xl font-black text-gray-800 leading-none">${getDay(event.date)}</span>
                             </div>
 
+                            <!-- Title -->
                             <div class="mt-6 mb-2">
                                 <h3 class="text-xl font-bold text-gray-800 leading-tight group-hover:text-${config.color}-600 transition-colors duration-300">${event.title}</h3>
                             </div>
+
+                            <!-- Description (NEW) -->
+                            <div class="mb-4">
+                                <p class="text-sm text-gray-500 font-medium leading-relaxed line-clamp-2">
+                                    ${event.description || 'Descripción breve del evento disponible próximamente.'}
+                                </p>
+                            </div>
                             
-                            <!-- Updated Size & Spacing for Info: Horizontal Layout -->
+                            <!-- Updated Info (Time + Dynamic Location) -->
                             <div class="flex items-center gap-4 mb-4 text-sm text-gray-500 font-medium">
                                 <div class="flex items-center gap-2 group/item p-1.5 rounded-lg transition-colors hover:bg-white/50">
                                     <div class="w-9 h-9 rounded-full bg-white flex items-center justify-center shadow-sm text-gray-400 text-base group-hover:text-${config.color}-500 transition-colors">
@@ -282,7 +362,8 @@
                                     <div class="w-9 h-9 rounded-full bg-white flex items-center justify-center shadow-sm text-gray-400 text-base group-hover:text-${config.color}-500 transition-colors">
                                         <i class="fas fa-link"></i>
                                     </div>
-                                    <span class="text-base font-bold text-gray-700">Teams</span>
+                                    <!-- Dynamic Location Text -->
+                                    <span class="text-base font-bold text-gray-700">${event.location || 'Campus'}</span>
                                 </div>
                             </div>
                             
