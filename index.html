@@ -22,19 +22,32 @@
                         primary: '#6C63FF',
                         secondary: '#FF6584',
                         accent: '#FFD93D',
-                        glass: 'rgba(255, 255, 255, 0.7)',
-                        glassBorder: 'rgba(255, 255, 255, 0.5)',
-                        darkGlass: 'rgba(20, 20, 20, 0.6)',
                     },
                     animation: {
-                        'float': 'float 6s ease-in-out infinite',
-                        'float-delayed': 'float 8s ease-in-out infinite 2s',
-                        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'blob': 'blob 10s infinite',
+                        'fade-up': 'fadeUp 0.8s ease-out forwards',
+                        'text-shimmer': 'textShimmer 3s ease-in-out infinite alternate',
+                        'shine': 'shine 3s infinite',
                     },
                     keyframes: {
-                        float: {
-                            '0%, 100%': { transform: 'translateY(0)' },
-                            '50%': { transform: 'translateY(-20px)' },
+                        blob: {
+                            '0%': { transform: 'translate(0px, 0px) scale(1)' },
+                            '33%': { transform: 'translate(30px, -50px) scale(1.1)' },
+                            '66%': { transform: 'translate(-20px, 20px) scale(0.9)' },
+                            '100%': { transform: 'translate(0px, 0px) scale(1)' },
+                        },
+                        fadeUp: {
+                            '0%': { opacity: '0', transform: 'translateY(40px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' },
+                        },
+                        textShimmer: {
+                            '0%': { backgroundPosition: '0% 50%' },
+                            '100%': { backgroundPosition: '100% 50%' },
+                        },
+                        shine: {
+                            '0%': { left: '-100%' },
+                            '20%': { left: '100%' },
+                            '100%': { left: '100%' },
                         }
                     }
                 }
@@ -43,88 +56,130 @@
     </script>
     <style>
         body {
-            background-color: #f3f4f6;
+            background-color: #f8fafc;
             overflow-x: hidden;
         }
         
         /* Custom Scrollbar */
-        ::-webkit-scrollbar {
-            width: 8px;
-        }
-        ::-webkit-scrollbar-track {
-            background: #f1f1f1; 
-        }
-        ::-webkit-scrollbar-thumb {
-            background: #c7c7c7; 
-            border-radius: 4px;
-        }
-        ::-webkit-scrollbar-thumb:hover {
-            background: #a8a8a8; 
-        }
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #f1f1f1; }
+        ::-webkit-scrollbar-thumb { background: #6C63FF; border-radius: 4px; }
 
+        /* Super Glass Card */
         .glass-card {
-            background: rgba(255, 255, 255, 0.85);
-            backdrop-filter: blur(8px);
-            border: 1px solid rgba(255, 255, 255, 0.6);
-            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.8);
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.07);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 
         .glass-card:hover {
-            transform: translateY(-8px) scale(1.02);
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
-            border-color: #6C63FF;
+            transform: translateY(-10px) scale(1.02);
+            background: rgba(255, 255, 255, 0.9);
+            border-color: rgba(255, 255, 255, 1);
         }
 
-        /* Background Blobs */
-        .blob {
+        /* Efecto de Brillo (Shine) en la Tarjeta */
+        .glass-card::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 50%;
+            height: 100%;
+            background: linear-gradient(to right, transparent, rgba(255, 255, 255, 0.6), transparent);
+            transform: skewX(-25deg);
+            z-index: 10;
+            transition: 0s; 
+            pointer-events: none;
+        }
+
+        .glass-card:hover::after {
+            left: 200%;
+            transition: 0.75s ease-in-out;
+        }
+
+        /* Animated Background Blobs */
+        .blob-container {
             position: fixed;
-            border-radius: 50%;
-            filter: blur(60px);
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
             z-index: -1;
-            opacity: 0.6;
+            overflow: hidden;
+            background: #fff;
+        }
+        .blob {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.8;
+            mix-blend-mode: multiply; /* Creates the watercolor effect */
+            animation: blob 15s infinite alternate;
+        }
+
+        /* Shine Effect for Buttons */
+        .btn-shine {
+            position: relative;
+            overflow: hidden;
+        }
+        .btn-shine::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 50%;
+            height: 100%;
+            background: linear-gradient(to right, transparent, rgba(255,255,255,0.4), transparent);
+            transform: skewX(-20deg);
+            animation: shine 4s infinite;
         }
     </style>
 </head>
-<body class="text-gray-800 antialiased min-h-screen relative selection:bg-primary selection:text-white">
+<body class="text-gray-800 antialiased min-h-screen relative selection:bg-accent selection:text-black">
 
-    <!-- Background Blobs -->
-    <div class="blob bg-purple-400 w-96 h-96 top-0 left-0 -translate-x-1/2 -translate-y-1/2 animate-float"></div>
-    <div class="blob bg-pink-400 w-80 h-80 bottom-0 right-0 translate-x-1/3 translate-y-1/3 animate-float-delayed"></div>
-    <div class="blob bg-yellow-200 w-64 h-64 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 animate-pulse-slow"></div>
+    <!-- Dynamic Background -->
+    <div class="blob-container">
+        <div class="blob bg-purple-300 w-96 h-96 top-0 left-0 animate-blob"></div>
+        <div class="blob bg-pink-300 w-96 h-96 bottom-0 right-0 animate-blob" style="animation-delay: 2s"></div>
+        <div class="blob bg-cyan-200 w-80 h-80 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 animate-blob" style="animation-delay: 4s"></div>
+    </div>
 
     <!-- Main Container -->
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 relative z-10">
         
-        <!-- Header (Simple Title) -->
-        <header class="mb-12 text-center">
-            <h1 class="text-4xl md:text-5xl font-extrabold tracking-tight mb-2">
-                <span class="bg-clip-text text-transparent bg-gradient-to-r from-primary via-purple-500 to-secondary">
+        <!-- Header (Animated Title) -->
+        <header class="mb-16 text-center opacity-0 animate-fade-up">
+            <h1 class="text-5xl md:text-7xl font-extrabold tracking-tight mb-4">
+                <span class="bg-clip-text text-transparent bg-gradient-to-r from-primary via-purple-500 to-secondary animate-text-shimmer bg-[length:200%_auto]">
                     Agenda de Eventos
                 </span>
             </h1>
+            <div class="h-1 w-24 bg-gradient-to-r from-primary to-secondary mx-auto rounded-full"></div>
         </header>
 
         <!-- Events Grid -->
-        <div id="events-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div id="events-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
             <!-- Cards will be injected here via JS -->
         </div>
 
         <!-- Empty State (Hidden by default) -->
         <div id="empty-state" class="hidden text-center py-20">
-            <div class="text-6xl mb-4">🍃</div>
-            <h3 class="text-2xl font-bold text-gray-700">No hay eventos programados</h3>
+            <div class="text-6xl mb-4 text-gray-300">🍃</div>
+            <h3 class="text-2xl font-bold text-gray-400">Todo tranquilo por aquí...</h3>
         </div>
 
         <!-- Footer (Branding) -->
-        <footer class="mt-24 mb-12 text-center border-t border-gray-200/60 pt-10">
-            <h2 class="text-3xl font-extrabold tracking-tight mb-2">
-                <span class="bg-clip-text text-transparent bg-gradient-to-r from-primary via-purple-500 to-secondary">
-                    Prográmate
-                </span>
+        <footer class="mt-32 mb-12 text-center border-t border-gray-200/60 pt-12 opacity-0 animate-fade-up" style="animation-delay: 0.5s">
+            <h2 class="text-4xl font-extrabold tracking-tight mb-3">
+                <span class="text-gray-800">Prográ</span><span class="text-primary">mate</span>
             </h2>
-            <p class="text-base text-gray-500 max-w-lg mx-auto">
-                Tu agenda universitaria en un solo lugar.
-                <span class="font-bold text-primary">Conecta</span>, <span class="font-bold text-secondary">Aprende</span> y <span class="font-bold text-accent">Vive</span> la U.
+            <p class="text-lg text-gray-500 max-w-lg mx-auto font-light">
+                Tu agenda universitaria en un solo lugar.<br>
+                <span class="font-semibold text-gray-700">Conecta</span> • <span class="font-semibold text-gray-700">Aprende</span> • <span class="font-semibold text-gray-700">Vive</span>
             </p>
         </footer>
 
@@ -134,91 +189,26 @@
     <script>
         // --- Configuration ---
         const categoryConfig = {
-            ecologica: { label: 'Ecológica', icon: 'fa-leaf', colorClass: 'bg-green-500 text-white' },
-            cultural: { label: 'Cultural', icon: 'fa-palette', colorClass: 'bg-orange-500 text-white' },
-            socioeconomica: { label: 'Socioeconómica', icon: 'fa-handshake', colorClass: 'bg-yellow-500 text-white' },
-            espiritual: { label: 'Espiritual', icon: 'fa-praying-hands', colorClass: 'bg-purple-600 text-white' },
-            psicoafectiva: { label: 'Psicoafectiva', icon: 'fa-heart', colorClass: 'bg-pink-600 text-white' },
-            acompanamiento: { label: 'Acompañamiento', icon: 'fa-users', colorClass: 'bg-blue-500 text-white' },
-            fisica: { label: 'Física', icon: 'fa-running', colorClass: 'bg-red-500 text-white' },
-            // Fallback for old ones just in case
-            pastoral: { label: 'Pastoral', icon: 'fa-dove', colorClass: 'bg-indigo-500 text-white' },
-            default: { label: 'Evento', icon: 'fa-calendar-day', colorClass: 'bg-gray-600 text-white' }
+            ecologica: { label: 'Ecológica', icon: 'fa-leaf', color: 'green', gradient: 'from-green-400 to-emerald-600' },
+            cultural: { label: 'Cultural', icon: 'fa-palette', color: 'orange', gradient: 'from-orange-400 to-red-500' },
+            socioeconomica: { label: 'Socioeconómica', icon: 'fa-handshake', color: 'yellow', gradient: 'from-yellow-400 to-amber-600' },
+            espiritual: { label: 'Espiritual', icon: 'fa-praying-hands', color: 'purple', gradient: 'from-purple-400 to-violet-600' },
+            psicoafectiva: { label: 'Psicoafectiva', icon: 'fa-heart', color: 'pink', gradient: 'from-pink-400 to-rose-600' },
+            acompanamiento: { label: 'Acompañamiento', icon: 'fa-users', color: 'blue', gradient: 'from-blue-400 to-indigo-600' },
+            fisica: { label: 'Física', icon: 'fa-running', color: 'red', gradient: 'from-red-400 to-rose-600' },
+            pastoral: { label: 'Pastoral', icon: 'fa-dove', color: 'indigo', gradient: 'from-indigo-400 to-blue-600' },
+            default: { label: 'Evento', icon: 'fa-calendar-day', color: 'gray', gradient: 'from-gray-400 to-gray-600' }
         };
 
         // --- Data ---
-        // Sample Initial Data with new categories
         const initialEvents = [
-            {
-                id: 1,
-                title: "Sembratón Universitaria",
-                category: "ecologica",
-                date: "2024-03-15",
-                time: "08:00",
-                image: "https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?q=80&w=1000&auto=format&fit=crop",
-                link: "#",
-                location: "Jardín Botánico"
-            },
-            {
-                id: 2,
-                title: "Festival de Teatro",
-                category: "cultural",
-                date: "2024-03-18",
-                time: "16:30",
-                image: "https://images.unsplash.com/photo-1503095392269-27528ca388ec?q=80&w=1000&auto=format&fit=crop",
-                link: "#",
-                location: "Auditorio Principal"
-            },
-            {
-                id: 3,
-                title: "Feria de Emprendimiento",
-                category: "socioeconomica",
-                date: "2024-03-20",
-                time: "10:00",
-                image: "https://images.unsplash.com/photo-1556761175-5973dc0f32e7?q=80&w=1000&auto=format&fit=crop",
-                link: "#",
-                location: "Plazoleta Central"
-            },
-            {
-                id: 4,
-                title: "Retiro de Silencio",
-                category: "espiritual",
-                date: "2024-03-22",
-                time: "07:00",
-                image: "https://images.unsplash.com/photo-1507692049790-de58293a469d?q=80&w=1000&auto=format&fit=crop",
-                link: "#",
-                location: "Capilla"
-            },
-            {
-                id: 5,
-                title: "Taller: Gestión de Emociones",
-                category: "psicoafectiva",
-                date: "2024-03-25",
-                time: "14:00",
-                image: "https://images.unsplash.com/photo-1499209974431-9dac3adaf471?q=80&w=1000&auto=format&fit=crop",
-                link: "#",
-                location: "Sala de Bienestar"
-            },
-             {
-                id: 6,
-                title: "Mentoría de Pares",
-                category: "acompanamiento",
-                date: "2024-03-28",
-                time: "11:00",
-                image: "https://images.unsplash.com/photo-1517486808906-6ca8b3f04846?q=80&w=1000&auto=format&fit=crop",
-                link: "#",
-                location: "Biblioteca"
-            },
-            {
-                id: 7,
-                title: "Carrera 5K por la Salud",
-                category: "fisica",
-                date: "2024-04-05",
-                time: "07:00",
-                image: "https://images.unsplash.com/photo-1552674605-46d53b925b4b?q=80&w=1000&auto=format&fit=crop",
-                link: "#",
-                location: "Pista Atlética"
-            }
+            { id: 1, title: "Inscripción a los semilleros de Ajedrez (Básico, medio y avanzado)", category: "fisica", date: "2026-02-20", time: "23:59", image: "https://images.unsplash.com/photo-1529699211952-734e80c4d42b?q=80&w=1000&auto=format&fit=crop", link: "https://encuestas.ucn.edu.co/index.php/544484?lang=es", location: "Jardín Botánico" },
+            { id: 2, title: "Eucaristía diaria", category: "espiritual", date: "Lunes a viernes", time: "12:00", image: "https://images.unsplash.com/photo-1549508477-3e484818ba7d?q=80&w=1000&auto=format&fit=crop", link: "#", location: "Facebook" },
+            { id: 3, title: "Feria de Emprendimiento", category: "socioeconomica", date: "2024-03-20", time: "10:00", image: "https://images.unsplash.com/photo-1556761175-5973dc0f32e7?q=80&w=1000&auto=format&fit=crop", link: "#", location: "Plazoleta Central" },
+            { id: 4, title: "Retiro de Silencio", category: "espiritual", date: "2024-03-22", time: "07:00", image: "https://images.unsplash.com/photo-1507692049790-de58293a469d?q=80&w=1000&auto=format&fit=crop", link: "#", location: "Capilla" },
+            { id: 5, title: "Taller: Gestión de Emociones", category: "psicoafectiva", date: "2024-03-25", time: "14:00", image: "https://images.unsplash.com/photo-1499209974431-9dac3adaf471?q=80&w=1000&auto=format&fit=crop", link: "#", location: "Sala de Bienestar" },
+            { id: 6, title: "Mentoría de Pares", category: "acompanamiento", date: "2024-03-28", time: "11:00", image: "https://images.unsplash.com/photo-1517486808906-6ca8b3f04846?q=80&w=1000&auto=format&fit=crop", link: "#", location: "Biblioteca" },
+            { id: 7, title: "Carrera 5K por la Salud", category: "fisica", date: "2024-04-05", time: "07:00", image: "https://images.unsplash.com/photo-1552674605-46d53b925b4b?q=80&w=1000&auto=format&fit=crop", link: "#", location: "Pista Atlética" }
         ];
 
         let events = [...initialEvents];
@@ -232,9 +222,11 @@
             const [hours, minutes] = timeString.split(':');
             const h = parseInt(hours, 10);
             const ampm = h >= 12 ? 'PM' : 'AM';
-            const formattedHour = h % 12 || 12;
-            return `${formattedHour}:${minutes} ${ampm}`;
+            return `${h % 12 || 12}:${minutes} ${ampm}`;
         };
+
+        const getMonth = (dateStr) => new Date(dateStr).toLocaleDateString('es-ES', {month: 'short'}).replace('.', '').toUpperCase();
+        const getDay = (dateStr) => new Date(dateStr).getDate() + 1; // Ajuste zona horaria simple
 
         // --- Render Function ---
         const renderEvents = () => {
@@ -245,46 +237,60 @@
             } else {
                 emptyState.classList.add('hidden');
                 
-                events.forEach(event => {
-                    // Get styling from config or fallback
+                events.forEach((event, index) => {
                     const config = categoryConfig[event.category] || categoryConfig.default;
                     
                     const card = document.createElement('div');
-                    card.className = 'glass-card rounded-3xl overflow-hidden flex flex-col h-full group relative';
+                    // Added animation delay for cascade effect
+                    card.style.animationDelay = `${index * 150}ms`;
+                    card.className = 'glass-card rounded-[2rem] overflow-hidden flex flex-col h-full group opacity-0 animate-fade-up border-transparent';
+                    
                     card.innerHTML = `
-                        <div class="h-48 overflow-hidden relative">
+                        <div class="h-52 overflow-hidden relative">
+                            <!-- Zoom effect on hover -->
                             <img src="${event.image}" alt="${event.title}" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
-                            <div class="absolute top-4 right-4 ${config.colorClass} text-xs font-bold px-3 py-1 rounded-full shadow-md flex items-center gap-1">
-                                <i class="fas ${config.icon}"></i> ${config.label}
+                            
+                            <!-- Modern Overlay -->
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-80"></div>
+
+                            <!-- Category Badge -->
+                            <div class="absolute top-4 right-4 bg-white/90 backdrop-blur-sm text-xs font-bold px-3 py-1.5 rounded-full shadow-lg flex items-center gap-1.5 text-gray-800 border border-white z-10">
+                                <i class="fas ${config.icon} text-${config.color}-500"></i> ${config.label}
                             </div>
-                            <div class="absolute bottom-0 left-0 w-full h-1/2 bg-gradient-to-t from-white/90 to-transparent"></div>
                         </div>
                         
-                        <div class="p-6 flex-1 flex flex-col relative">
-                            <!-- Floating Date Box -->
-                            <div class="absolute -top-10 left-6 bg-white rounded-xl shadow-lg p-2 text-center w-16 h-16 flex flex-col justify-center items-center border border-gray-100 z-10">
-                                <span class="text-xs font-bold text-gray-400 uppercase block leading-none mb-1">${new Date(event.date).toLocaleDateString('es-ES', {month: 'short'}).replace('.', '')}</span>
-                                <span class="text-xl font-extrabold text-gray-800 leading-none">${new Date(event.date).getDate() + 1}</span>
+                        <div class="p-6 flex-1 flex flex-col relative bg-white/40">
+                            <!-- Floating Date Ticket -->
+                            <div class="absolute -top-8 left-6 bg-white rounded-xl shadow-[0_8px_16px_rgba(0,0,0,0.1)] p-1 text-center w-16 h-16 flex flex-col justify-center items-center border border-gray-100 group-hover:-translate-y-2 transition-transform duration-300 z-10">
+                                <span class="text-[10px] font-bold text-gray-400 uppercase tracking-widest leading-none mb-0.5">${getMonth(event.date)}</span>
+                                <span class="text-2xl font-black text-gray-800 leading-none">${getDay(event.date)}</span>
                             </div>
 
-                            <div class="mt-4 mb-2">
-                                <h3 class="text-xl font-bold text-gray-800 leading-tight group-hover:text-primary transition-colors">${event.title}</h3>
+                            <div class="mt-6 mb-2">
+                                <h3 class="text-xl font-bold text-gray-800 leading-tight group-hover:text-${config.color}-600 transition-colors duration-300">${event.title}</h3>
                             </div>
                             
-                            <div class="space-y-2 mb-6 text-sm text-gray-500">
-                                <div class="flex items-center gap-2">
-                                    <i class="far fa-clock text-accent"></i>
-                                    <span>${formatTime(event.time)}</span>
+                            <!-- Updated Size & Spacing for Info: Horizontal Layout -->
+                            <div class="flex items-center gap-4 mb-4 text-sm text-gray-500 font-medium">
+                                <div class="flex items-center gap-2 group/item p-1.5 rounded-lg transition-colors hover:bg-white/50">
+                                    <div class="w-9 h-9 rounded-full bg-white flex items-center justify-center shadow-sm text-gray-400 text-base group-hover:text-${config.color}-500 transition-colors">
+                                        <i class="far fa-clock"></i>
+                                    </div>
+                                    <span class="text-base font-bold text-gray-700">${formatTime(event.time)}</span>
                                 </div>
-                                <div class="flex items-center gap-2">
-                                    <i class="fas fa-map-marker-alt text-accent"></i>
-                                    <span>${event.location || 'Campus'}</span>
+                                <div class="flex items-center gap-2 group/item p-1.5 rounded-lg transition-colors hover:bg-white/50">
+                                    <div class="w-9 h-9 rounded-full bg-white flex items-center justify-center shadow-sm text-gray-400 text-base group-hover:text-${config.color}-500 transition-colors">
+                                        <i class="fas fa-link"></i>
+                                    </div>
+                                    <span class="text-base font-bold text-gray-700">Teams</span>
                                 </div>
                             </div>
                             
-                            <div class="mt-auto pt-4 border-t border-gray-100">
-                                <a href="${event.link}" target="_blank" class="w-full block text-center bg-gray-800 text-white font-bold py-3 rounded-xl transition-all hover:bg-primary">
-                                    Inscribirse
+                            <div class="mt-auto relative z-20">
+                                <a href="${event.link}" target="_blank" class="btn-shine relative overflow-hidden w-full block text-center text-white font-bold py-3 rounded-2xl transition-all duration-300 transform group-hover:scale-[1.02] shadow-md group-hover:shadow-lg bg-gradient-to-r ${config.gradient}">
+                                    <span class="relative z-10 flex items-center justify-center gap-2">
+                                        Participa <i class="fas fa-arrow-right text-sm transition-transform group-hover:translate-x-1"></i>
+                                    </span>
                                 </a>
                             </div>
                         </div>
