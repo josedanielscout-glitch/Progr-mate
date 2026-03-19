@@ -256,7 +256,7 @@ const getNextEucharistDate = () => {
         };
 
         const getMonth = (dateStr) => new Date(dateStr).toLocaleDateString('es-ES', {month: 'short'}).replace('.', '').toUpperCase();
-        const getDay = (dateStr) => new Date(dateStr).getDate() + 1; // Ajuste zona horaria simple
+        const getDay = (dateStr) => new Date(dateStr).getDate();
 
         // --- Render Function ---
         const renderEvents = () => {
