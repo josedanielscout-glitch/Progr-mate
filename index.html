@@ -195,6 +195,24 @@
             default: { label: 'Evento', icon: 'fa-calendar-day', color: 'gray', gradient: 'from-gray-400 to-gray-600' }
         };
 
+const getNextEucharistDate = () => {
+    const today = new Date();
+    const day = today.getDay(); // 0=Domingo, 1=Lunes... 6=Sábado
+
+    let nextDate = new Date(today);
+
+    if (day >= 0 && day <= 4) {
+        // Domingo (0) a Jueves (4): siguiente día
+        nextDate.setDate(today.getDate() + 1);
+    } else {
+        // Viernes (5) y Sábado (6): próximo lunes
+        const daysToMonday = (8 - day) % 7;
+        nextDate.setDate(today.getDate() + daysToMonday);
+    }
+
+    return nextDate.toISOString().split('T')[0];
+};
+        
         // --- Data ---
         const initialEvents = [
             { 
@@ -202,7 +220,7 @@
                 title: "Eucaristía diaria", 
                 description: "Participa de la Santa Misa de lunes a viernes.",
                 category: "espiritual", 
-                date: "2026-03-18", 
+                date: getNextEucharistDate(),
                 time: "12:00", 
                 image: "https://images.unsplash.com/photo-1549508477-3e484818ba7d?q=80&w=1000&auto=format&fit=crop", 
                 link: "https://www.facebook.com/SoyCatolicaDelNorte/live_videos", 
@@ -211,18 +229,6 @@
             },
             { 
                 id: 2, 
-                title: "Socialización del acuerdo de segunda lengua", 
-                description: "Centro de Idiomas",
-                category: "acompanamiento", 
-                date: "2026-03-17", 
-                time: "17:00", 
-                image: "https://images.unsplash.com/photo-1588912914017-923900a34710?q=80&w=1000&auto=format&fit=crop", 
-                link: "https://teams.microsoft.com/meet/26201545354309?p=dP6EeMtPlkNeZYjHCr", 
-                location: "Teams",
-                cta: "Conéctate"
-            },
-            { 
-                id: 3, 
                 title: "Retiro espiritual para estudiantes", 
                 description: "Volveré a la casa de mi Padre. Lc. 15,18",
                 category: "espiritual", 
