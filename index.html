@@ -202,15 +202,21 @@ const getNextEucharistDate = () => {
 
     let resultDate = new Date(now);
 
+    // 👉 Antes del mediodía → HOY
     if (hour < 12) {
-        // 👉 Antes del mediodía → HOY
         return resultDate.toISOString().split('T')[0];
     }
 
-    if (day === 5 || day === 6) {
-        // 👉 Viernes o sábado → lunes siguiente (CORREGIDO)
-        const daysToMonday = (1 - day + 7) % 7 || 7;
-        resultDate.setDate(now.getDate() + daysToMonday);
+    // 👉 Después del mediodía
+
+    if (day === 5) {
+        // 👉 Viernes → lunes (sumar 3 días)
+        resultDate.setDate(now.getDate() + 3);
+
+    } else if (day === 6) {
+        // 👉 Sábado → lunes (sumar 2 días)
+        resultDate.setDate(now.getDate() + 2);
+
     } else {
         // 👉 Domingo a jueves → mañana
         resultDate.setDate(now.getDate() + 1);
