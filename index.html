@@ -207,13 +207,12 @@ const getNextEucharistDate = () => {
         return resultDate.toISOString().split('T')[0];
     }
 
-    // 👉 Después del mediodía
     if (day === 5 || day === 6) {
-        // Viernes o sábado → próximo lunes
-        const daysToMonday = (8 - day) % 7;
+        // 👉 Viernes o sábado → lunes siguiente (CORREGIDO)
+        const daysToMonday = (1 - day + 7) % 7 || 7;
         resultDate.setDate(now.getDate() + daysToMonday);
     } else {
-        // Domingo a jueves → mañana
+        // 👉 Domingo a jueves → mañana
         resultDate.setDate(now.getDate() + 1);
     }
 
