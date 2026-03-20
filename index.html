@@ -198,26 +198,26 @@
 const getNextEucharistDate = () => {
     const now = new Date();
     const hour = now.getHours();
+    const day = now.getDay(); // 0=Domingo ... 6=Sábado
 
-    // 👉 Base: hoy o mañana dependiendo de la hora
-    let baseDate = new Date(now);
-    if (hour >= 12) {
-        baseDate.setDate(baseDate.getDate() + 1);
+    let resultDate = new Date(now);
+
+    if (hour < 12) {
+        // 👉 Antes del mediodía → HOY
+        return resultDate.toISOString().split('T')[0];
     }
 
-    const day = baseDate.getDay(); // 0=Domingo ... 6=Sábado
-    let nextDate = new Date(baseDate);
-
+    // 👉 Después del mediodía
     if (day === 5 || day === 6) {
-        // 👉 Viernes o sábado → próximo lunes
+        // Viernes o sábado → próximo lunes
         const daysToMonday = (8 - day) % 7;
-        nextDate.setDate(baseDate.getDate() + daysToMonday);
+        resultDate.setDate(now.getDate() + daysToMonday);
     } else {
-        // 👉 Domingo a jueves → siguiente día
-        nextDate.setDate(baseDate.getDate() + 1);
+        // Domingo a jueves → mañana
+        resultDate.setDate(now.getDate() + 1);
     }
 
-    return nextDate.toISOString().split('T')[0];
+    return resultDate.toISOString().split('T')[0];
 };
         
         // --- Data ---
