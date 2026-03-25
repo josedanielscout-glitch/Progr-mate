@@ -195,36 +195,6 @@
             default: { label: 'Evento', icon: 'fa-calendar-day', color: 'gray', gradient: 'from-gray-400 to-gray-600' }
         };
 
-const getNextEucharistDate = () => {
-    const now = new Date();
-    const hour = now.getHours();
-    const day = now.getDay(); // 0=Domingo ... 6=Sábado
-
-    let resultDate = new Date(now);
-
-    // 👉 Antes del mediodía → HOY
-    if (hour < 12) {
-        return resultDate.toISOString().split('T')[0];
-    }
-
-    // 👉 Después del mediodía
-
-    if (day === 5) {
-        // 👉 Viernes → lunes (sumar 3 días)
-        resultDate.setDate(now.getDate() + 3);
-
-    } else if (day === 6) {
-        // 👉 Sábado → lunes (sumar 2 días)
-        resultDate.setDate(now.getDate() + 2);
-
-    } else {
-        // 👉 Domingo a jueves → mañana
-        resultDate.setDate(now.getDate() + 1);
-    }
-
-    return resultDate.toISOString().split('T')[0];
-};
-        
         // --- Data ---
         const initialEvents = [
             { 
@@ -232,7 +202,7 @@ const getNextEucharistDate = () => {
                 title: "Eucaristía diaria", 
                 description: "Participa de la Santa Misa de lunes a viernes.",
                 category: "espiritual", 
-                date: getNextEucharistDate(),
+                date: "2026-03-26",
                 time: "12:00", 
                 image: "https://images.unsplash.com/photo-1549508477-3e484818ba7d?q=80&w=1000&auto=format&fit=crop", 
                 link: "https://www.facebook.com/SoyCatolicaDelNorte/live_videos", 
