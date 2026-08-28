@@ -166,7 +166,6 @@
         </header>
 
         <!-- Events Grid (Fixed 3 columns always) -->
-        <!-- Usamos gap-2 en móviles para que quepan, y gap-8 en desktop -->
         <div id="events-grid" class="grid grid-cols-3 gap-2 sm:gap-4 md:gap-6 lg:gap-8">
             <!-- Cards will be injected here via JS -->
         </div>
@@ -176,7 +175,6 @@
             <div class="text-4xl md:text-6xl mb-4 text-gray-300">🍃</div>
             <h3 class="text-xl md:text-2xl font-bold text-gray-400">Todo tranquilo por aquí...</h3>
         </div>
-
 
     </div>
 
@@ -226,7 +224,7 @@
                 title: "Silénciate y escucha: Oración para estudiantes, graduados y sus familias", 
                 description: "Semana de la Identidad Católica 2026.",
                 category: "espiritual", 
-                date: "2026-09-1",
+                date: "2026-09-01", // Modificado a 01 por buenas prácticas
                 time: "19:00", 
                 image: "https://images.unsplash.com/photo-1473122430480-d00e6dd25ba8?q=80&w=1000&auto=format&fit=crop", 
                 link: "https://teams.microsoft.com/meet/221424546446256?p=W4mmDotm3ktq4yCExQ", 
@@ -266,6 +264,13 @@
         const emptyState = document.getElementById('empty-state');
 
         // --- Formatting Functions ---
+        
+        // Novedad: Función para crear una fecha 100% segura en zona local sin importar el país
+        const getSafeDate = (dateStr) => {
+            const [year, month, day] = dateStr.split('-');
+            return new Date(year, month - 1, day);
+        };
+
         const formatTime = (timeString) => {
             const [hours, minutes] = timeString.split(':');
             const h = parseInt(hours, 10);
@@ -273,8 +278,11 @@
             return `${h % 12 || 12}:${minutes} ${ampm}`;
         };
 
-        const getMonth = (dateStr) => new Date(dateStr).toLocaleDateString('es-ES', {month: 'short'}).replace('.', '').toUpperCase();
-        const getDay = (dateStr) => new Date(dateStr).getDate() + 1; // Ajuste zona horaria simple
+        // Ahora usamos getSafeDate en lugar del constructor de Date directo
+        const getMonth = (dateStr) => getSafeDate(dateStr).toLocaleDateString('es-ES', {month: 'short'}).replace('.', '').toUpperCase();
+        
+        // Ya no necesitamos sumar + 1 artificialmente
+        const getDay = (dateStr) => getSafeDate(dateStr).getDate();
 
         // --- Render Function ---
         const renderEvents = () => {
@@ -291,20 +299,16 @@
                     const card = document.createElement('div');
                     card.style.animationDelay = `${index * 150}ms`;
                     
-                    // Clases responsivas para el contenedor
-                    // rounded-xl en móvil, rounded-[2rem] en desktop
-                    // h-full para que ocupe todo el alto disponible en la fila
                     card.className = 'glass-card rounded-xl md:rounded-[2rem] overflow-hidden flex flex-col w-full h-full group opacity-0 animate-fade-up border-transparent';
                     
                     card.innerHTML = `
-                        <!-- Imagen: relación de aspecto 4/3 para dar espacio vertical -->
                         <div class="relative w-full aspect-[4/3] md:h-48 md:aspect-auto overflow-hidden shrink-0">
                             <img src="${event.image}" alt="${event.title}" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
                             
                             <!-- Modern Overlay -->
                             <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-80"></div>
 
-                            <!-- Category Badge: Pequeño pero legible -->
+                            <!-- Category Badge -->
                             <div class="absolute top-2 right-2 md:top-4 md:right-4 bg-white/90 backdrop-blur-sm text-[8px] md:text-xs font-bold px-2 py-1 md:px-3 md:py-1.5 rounded-full shadow-lg flex items-center gap-1 md:gap-1.5 text-gray-800 border border-white z-10">
                                 <i class="fas ${config.icon} text-${config.color}-500 text-[8px] md:text-xs"></i> 
                                 <span class="hidden md:inline">${config.label}</span> 
@@ -312,7 +316,6 @@
                             </div>
                         </div>
                         
-                        <!-- Contenido: Padding ajustado -->
                         <div class="p-2 md:p-6 flex-1 flex flex-col relative bg-white/40">
                             
                             <!-- Fecha Flotante -->
@@ -321,21 +324,21 @@
                                 <span class="text-sm md:text-2xl font-black text-gray-800 leading-none">${getDay(event.date)}</span>
                             </div>
 
-                            <!-- Título: Permitimos más líneas en móvil -->
+                            <!-- Título -->
                             <div class="mt-7 md:mt-8 mb-1 md:mb-2">
                                 <h3 class="text-[10px] md:text-xl font-bold text-gray-800 leading-tight group-hover:text-${config.color}-600 transition-colors duration-300 line-clamp-3 md:line-clamp-2" title="${event.title}">
                                     ${event.title}
                                 </h3>
                             </div>
 
-                            <!-- Descripción: Visible en móvil ahora -->
+                            <!-- Descripción -->
                             <div class="mb-2 md:mb-4">
                                 <p class="text-[9px] md:text-sm text-gray-500 font-medium leading-relaxed line-clamp-3 md:line-clamp-2">
                                     ${event.description || 'Descripción breve disponible.'}
                                 </p>
                             </div>
                             
-                            <!-- Info: Iconos pequeños, layout en columna para móvil para ahorrar ancho -->
+                            <!-- Info -->
                             <div class="flex flex-col md:flex-row md:flex-wrap md:items-center gap-1 md:gap-x-4 md:gap-y-2 mb-2 md:mb-4 text-[9px] md:text-sm text-gray-500 font-medium">
                                 <div class="flex items-center gap-1 md:gap-2 group/item rounded-lg transition-colors hover:bg-white/50">
                                     <div class="w-4 h-4 md:w-9 md:h-9 rounded-full bg-white flex items-center justify-center shadow-sm text-gray-400 text-[8px] md:text-base group-hover:text-${config.color}-500 transition-colors shrink-0">
@@ -351,7 +354,7 @@
                                 </div>
                             </div>
                             
-                            <!-- Botón: Compacto en móvil -->
+                            <!-- Botón -->
                             <div class="mt-auto relative z-20">
                                 <a href="${event.link}" target="_blank" class="btn-shine relative overflow-hidden w-full block text-center text-white font-bold py-1.5 md:py-3 rounded-lg md:rounded-2xl transition-all duration-300 transform group-hover:scale-[1.02] shadow-sm md:shadow-md group-hover:shadow-lg bg-gradient-to-r ${config.gradient}">
                                     <span class="relative z-10 flex items-center justify-center gap-1 md:gap-2">
