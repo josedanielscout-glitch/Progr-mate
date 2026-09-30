@@ -5,8 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Prográmate | Agenda Universitaria</title>
     
-    <!-- Google Fonts & Font Awesome se mantienen por ser recursos de tipografía e iconos optimizados -->
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800;900&display=swap" rel="stylesheet">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
@@ -20,10 +21,10 @@
             --text-light: #9ca3af;
         }
 
-        * {
+        *, *::before, *::after {
+            box-sizing: border-box;
             margin: 0;
             padding: 0;
-            box-sizing: border-box;
         }
 
         body {
@@ -34,6 +35,13 @@
             min-height: 100vh;
             position: relative;
             -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        /* Selection Color */
+        ::selection {
+            background-color: var(--accent);
+            color: #000;
         }
 
         /* Custom Scrollbar */
@@ -41,6 +49,40 @@
         ::-webkit-scrollbar-track { background: #f1f1f1; }
         ::-webkit-scrollbar-thumb { background: var(--primary); border-radius: 4px; }
 
+        /* Typography Utilities */
+        .text-center { text-align: center; }
+        .font-bold { font-weight: 700; }
+        .font-extrabold { font-weight: 800; }
+        .font-black { font-weight: 900; }
+        .font-medium { font-weight: 500; }
+        .tracking-tight { letter-spacing: -0.025em; }
+        .tracking-widest { letter-spacing: 0.1em; }
+        .uppercase { text-transform: uppercase; }
+        
+        .truncate {
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .line-clamp-3 {
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;  
+            overflow: hidden;
+        }
+
+        .max-w-7xl { max-width: 80rem; }
+        .mx-auto { margin-left: auto; margin-right: auto; }
+        .px-2 { padding-left: 0.5rem; padding-right: 0.5rem; }
+        .py-12 { padding-top: 3rem; padding-bottom: 3rem; }
+        .relative { position: relative; }
+        .absolute { position: absolute; }
+        .inset-0 { top: 0; right: 0; bottom: 0; left: 0; }
+        .z-10 { z-index: 10; }
+        .z-20 { z-index: 20; }
+        
+        /* Background Blobs */
         .blob-container {
             position: fixed;
             top: 0;
@@ -51,44 +93,40 @@
             overflow: hidden;
             background: #fff;
         }
-
+        
         .blob {
             position: absolute;
             border-radius: 50%;
             filter: blur(80px);
-            opacity: 0.6;
+            opacity: 0.8;
             mix-blend-mode: multiply; 
-            animation: blobAnim 15s infinite alternate;
+            animation: blobAnim 10s infinite alternate;
         }
-
-        .blob-1 { background: #d8b4fe; width: 400px; height: 400px; top: -10%; left: -10%; }
-        .blob-2 { background: #f9a8d4; width: 400px; height: 400px; bottom: -10%; right: -10%; animation-delay: 2s; }
-        .blob-3 { background: #a5f3fc; width: 350px; height: 350px; top: 50%; left: 50%; transform: translate(-50%, -50%); animation-delay: 4s; }
-
-        .container {
-            max-w-width: 1280px;
-            margin: 0 auto;
-            padding: 3rem 1rem;
-            position: relative;
-            z-index: 10;
+        
+        .blob-1 { background-color: #d8b4fe; width: 24rem; height: 24rem; top: 0; left: 0; }
+        .blob-2 { background-color: #f9a8d4; width: 24rem; height: 24rem; bottom: 0; right: 0; animation-delay: 2s; }
+        .blob-3 { 
+            background-color: #a5f3fc; 
+            width: 20rem; height: 20rem; 
+            top: 50%; left: 50%; 
+            transform: translate(-50%, -50%); 
+            animation-delay: 4s; 
         }
 
         header {
-            text-align: center;
-            margin-bottom: 3rem;
+            margin-bottom: 2rem;
             opacity: 0;
             animation: fadeUp 0.8s ease-out forwards;
         }
-
+        
         h1 {
-            font-size: 2.5rem;
-            font-weight: 800;
-            letter-spacing: -0.02em;
+            font-size: 2.25rem;
+            line-height: 2.5rem;
             margin-bottom: 1rem;
         }
 
-        .shimmer-text {
-            background: linear-gradient(to right, var(--primary), #a855f7, var(--secondary));
+        .text-shimmer {
+            background-image: linear-gradient(to right, var(--primary), #a855f7, var(--secondary));
             background-size: 200% auto;
             color: transparent;
             -webkit-background-clip: text;
@@ -97,25 +135,18 @@
         }
 
         .header-divider {
-            height: 4px;
-            width: 80px;
-            background: linear-gradient(to right, var(--primary), var(--secondary));
+            height: 0.25rem;
+            width: 4rem;
+            background-image: linear-gradient(to right, var(--primary), var(--secondary));
             margin: 0 auto;
-            border-radius: 99px;
+            border-radius: 9999px;
         }
 
-        .events-grid {
+        .grid-container {
             display: grid;
-            grid-template-columns: 1fr; /* 1 Columna en móviles */
-            gap: 1.5rem;
-        }
-
-        @media (min-width: 640px) {
-            .events-grid { grid-template-columns: repeat(2, 1fr); } /* 2 Columnas en tablets */
-        }
-
-        @media (min-width: 1024px) {
-            .events-grid { grid-template-columns: repeat(3, 1fr); gap: 2rem; } /* 3 Columnas en PC */
+            /* SE CONSERVA: 3 Columnas forzadas en todos los dispositivos */
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 0.5rem; /* gap-2 */
         }
 
         .glass-card {
@@ -123,13 +154,16 @@
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
             border: 1px solid rgba(255, 255, 255, 0.8);
-            border-radius: 1.5rem;
+            border-color: transparent;
             box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.07);
             transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             position: relative;
-            overflow: hidden; 
+            overflow: hidden;
             display: flex;
             flex-direction: column;
+            width: 100%;
+            height: 100%;
+            border-radius: 0.75rem; /* rounded-xl */
             opacity: 0;
             animation: fadeUp 0.8s ease-out forwards;
         }
@@ -142,12 +176,13 @@
             box-shadow: 0 20px 40px -5px rgba(0,0,0,0.1);
         }
 
-        /* Efecto de brillo en la tarjeta */
         .glass-card::after {
             content: "";
             position: absolute;
-            top: 0; left: -100%;
-            width: 50%; height: 100%;
+            top: 0;
+            left: -100%;
+            width: 50%;
+            height: 100%;
             background: linear-gradient(to right, transparent, rgba(255, 255, 255, 0.6), transparent);
             transform: skewX(-25deg);
             z-index: 10;
@@ -160,168 +195,234 @@
             transition: 0.75s ease-in-out;
         }
 
-        .card-image-wrapper {
+        .card-img-container {
             position: relative;
             width: 100%;
-            height: 200px;
+            aspect-ratio: 4 / 3;
             overflow: hidden;
             flex-shrink: 0;
         }
 
-        .card-image {
+        .card-img {
             width: 100%;
             height: 100%;
             object-fit: cover;
-            transition: transform 0.7s ease;
+            transition: transform 0.7s;
         }
 
-        .glass-card:hover .card-image {
+        .glass-card:hover .card-img {
             transform: scale(1.1);
         }
 
-        .card-image-overlay {
+        .img-overlay {
             position: absolute;
             inset: 0;
-            background: linear-gradient(to top, rgba(0,0,0,0.6), transparent);
+            background-image: linear-gradient(to top, rgba(0,0,0,0.6), transparent, transparent);
+            opacity: 0.8;
         }
 
-        .category-badge {
+        .badge-category {
             position: absolute;
-            top: 1rem;
-            right: 1rem;
-            background: rgba(255, 255, 255, 0.95);
+            top: 0.5rem;
+            right: 0.5rem;
+            background-color: rgba(255, 255, 255, 0.9);
             backdrop-filter: blur(4px);
-            padding: 0.4rem 0.8rem;
-            border-radius: 99px;
-            font-size: 0.75rem;
+            /* SE CONSERVA: Tamaño de fuente 8px para móvil */
+            font-size: 8px;
             font-weight: 700;
-            color: var(--text-main);
+            padding: 0.25rem 0.5rem;
+            border-radius: 9999px;
+            box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1);
             display: flex;
             align-items: center;
-            gap: 0.4rem;
-            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
+            gap: 0.25rem;
+            color: var(--text-main);
             border: 1px solid white;
             z-index: 10;
         }
 
+        .badge-text-mobile {
+            display: inline;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            max-width: 50px;
+        }
+        .badge-text-desktop { display: none; }
+
         .card-content {
-            padding: 1.5rem;
+            padding: 0.5rem;
+            flex: 1;
             display: flex;
             flex-direction: column;
-            flex: 1;
             position: relative;
-            background: rgba(255, 255, 255, 0.4);
+            background-color: rgba(255, 255, 255, 0.4);
         }
 
         .date-badge {
             position: absolute;
-            top: -2rem;
-            left: 1.5rem;
-            background: white;
-            border-radius: 0.75rem;
-            padding: 0.5rem;
-            width: 3.5rem;
-            height: 3.5rem;
+            top: -1rem;
+            left: 0.5rem;
+            background-color: white;
+            border-radius: 0.5rem;
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
+            padding: 0.125rem;
+            text-align: center;
+            width: 2.5rem;
+            height: 2.5rem;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
             border: 1px solid #f3f4f6;
-            transition: transform 0.3s ease;
+            transition: transform 0.3s;
             z-index: 10;
         }
+        
+        .glass-card:hover .date-badge {
+            transform: translateY(-0.25rem);
+        }
 
-        .glass-card:hover .date-badge { transform: translateY(-4px); }
+        /* SE CONSERVA: Tamaños de fuente extremadamente pequeños */
+        .date-month { font-size: 7px; font-weight: 700; color: #9ca3af; text-transform: uppercase; letter-spacing: 0.1em; line-height: 1; margin-bottom: 1px; }
+        .date-day { font-size: 0.875rem; font-weight: 900; color: var(--text-main); line-height: 1; }
 
-        .date-month { font-size: 0.65rem; font-weight: 800; color: var(--text-light); text-transform: uppercase; letter-spacing: 0.1em; line-height: 1; margin-bottom: 2px; }
-        .date-day { font-size: 1.25rem; font-weight: 900; color: var(--text-main); line-height: 1; }
+        .card-title-container {
+            margin-top: 1.75rem;
+            margin-bottom: 0.25rem;
+        }
 
         .card-title {
-            font-size: 1.25rem;
-            font-weight: 800;
-            line-height: 1.2;
-            margin-top: 1rem;
-            margin-bottom: 0.5rem;
+            /* SE CONSERVA: Tamaño de fuente 10px */
+            font-size: 10px;
+            font-weight: 700;
             color: var(--text-main);
-            display: -webkit-box;
-            -webkit-line-clamp: 2;
-            -webkit-box-orient: vertical;
-            overflow: hidden;
-            transition: color 0.3s ease;
+            line-height: 1.25;
+            transition: color 0.3s;
         }
 
-        .glass-card:hover .card-title { color: var(--cat-color, var(--primary)); }
+        .glass-card:hover .card-title {
+            color: var(--cat-color);
+        }
+
+        .card-desc-container {
+            margin-bottom: 0.5rem;
+        }
 
         .card-desc {
-            font-size: 0.875rem;
+            /* SE CONSERVA: Tamaño de fuente 9px */
+            font-size: 9px;
             color: var(--text-muted);
-            line-height: 1.5;
-            margin-bottom: 1rem;
-            display: -webkit-box;
-            -webkit-line-clamp: 2;
-            -webkit-box-orient: vertical;
-            overflow: hidden;
+            font-weight: 500;
+            line-height: 1.625;
         }
 
-        .card-info-group {
+        .info-container {
             display: flex;
             flex-direction: column;
-            gap: 0.5rem;
-            margin-bottom: 1.5rem;
+            gap: 0.25rem;
+            margin-bottom: 0.5rem;
+            /* SE CONSERVA: Tamaño de fuente 9px */
+            font-size: 9px;
+            color: var(--text-muted);
+            font-weight: 500;
         }
 
         .info-item {
             display: flex;
             align-items: center;
-            gap: 0.75rem;
-            font-size: 0.875rem;
-            color: var(--text-muted);
-            font-weight: 600;
+            gap: 0.25rem;
+            border-radius: 0.5rem;
+            transition: background-color 0.2s;
         }
 
+        .info-item:hover { background-color: rgba(255, 255, 255, 0.5); }
+
         .info-icon {
-            width: 2rem;
-            height: 2rem;
-            background: white;
-            border-radius: 50%;
+            width: 1rem;
+            height: 1rem;
+            border-radius: 9999px;
+            background-color: white;
             display: flex;
             align-items: center;
             justify-content: center;
-            color: var(--text-light);
-            box-shadow: 0 1px 2px rgba(0,0,0,0.05);
-            transition: color 0.3s;
+            box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+            color: #9ca3af;
+            /* SE CONSERVA: Tamaño de fuente 8px */
+            font-size: 8px;
+            transition: color 0.2s;
+            flex-shrink: 0;
         }
 
-        .glass-card:hover .info-icon { color: var(--cat-color, var(--primary)); }
-        
-        .info-text {
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
+        .info-item:hover .info-icon { color: var(--cat-color); }
+
+        .info-text-time { font-weight: 700; color: #374151; white-space: nowrap; }
+        .info-text-loc { font-weight: 700; color: #374151; overflow: hidden; text-overflow: ellipsis; max-width: 70px; white-space: nowrap; }
 
         .btn-action {
             margin-top: auto;
-            display: block;
+            position: relative;
+            overflow: hidden;
             width: 100%;
+            display: block;
             text-align: center;
             color: white;
             font-weight: 700;
-            padding: 0.75rem 1rem;
-            border-radius: 1rem;
+            padding: 0.375rem 0;
+            border-radius: 0.5rem;
+            transition: all 0.3s;
+            box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
             text-decoration: none;
-            background: linear-gradient(to right, var(--cat-grad-start, var(--primary)), var(--cat-grad-end, var(--secondary)));
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
+            /* Background gradiente via inline style */
         }
 
         .btn-action:hover {
             transform: scale(1.02);
             box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1);
         }
+
+        .btn-inner {
+            position: relative;
+            z-index: 10;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.25rem;
+        }
+
+        .btn-text {
+            /* SE CONSERVA: Tamaño de fuente 9px */
+            font-size: 9px;
+        }
+
+        .btn-icon {
+            /* SE CONSERVA: Tamaño de fuente 8px */
+            font-size: 8px;
+            transition: transform 0.3s;
+        }
+
+        .glass-card:hover .btn-icon { transform: translateX(0.25rem); }
+
+        .btn-shine::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 50%;
+            height: 100%;
+            background: linear-gradient(to right, transparent, rgba(255,255,255,0.4), transparent);
+            transform: skewX(-20deg);
+            animation: shine 4s infinite;
+        }
+
+        /* Empty State */
+        .empty-state {
+            display: none;
+            text-align: center;
+            padding: 5rem 0;
+        }
+        .empty-icon { font-size: 2.25rem; margin-bottom: 1rem; color: #d1d5db; }
+        .empty-text { font-size: 1.25rem; font-weight: 700; color: #9ca3af; line-height: 2rem;}
 
         @keyframes blobAnim {
             0% { transform: translate(0px, 0px) scale(1); }
@@ -340,41 +441,115 @@
             100% { background-position: 100% 50%; }
         }
 
-        .empty-state {
-            text-align: center;
-            padding: 5rem 1rem;
-            display: none;
+        @keyframes shine {
+            0% { left: -100%; }
+            20% { left: 100%; }
+            100% { left: 100%; }
         }
-        .empty-icon { font-size: 4rem; margin-bottom: 1rem; color: #d1d5db; }
-        .empty-text { font-size: 1.5rem; font-weight: 700; color: #9ca3af; }
 
-        @media (min-width: 768px) { h1 { font-size: 3.5rem; } }
-        @media (min-width: 1024px) { h1 { font-size: 4.5rem; } .container { padding: 4rem 2rem; } }
+        @media (min-width: 640px) {
+            .px-2 { padding-left: 1rem; padding-right: 1rem; }
+            .grid-container { gap: 1rem; }
+        }
+
+        @media (min-width: 768px) {
+            .px-2 { padding-left: 1.5rem; padding-right: 1.5rem; }
+            header { margin-bottom: 3rem; }
+            h1 { font-size: 3rem; line-height: 1; }
+            .header-divider { width: 6rem; }
+            
+            .grid-container { gap: 1.5rem; }
+            .glass-card { border-radius: 2rem; }
+            .card-img-container { height: 12rem; aspect-ratio: auto; }
+            
+            .badge-category {
+                top: 1rem; right: 1rem;
+                padding: 0.375rem 0.75rem;
+                font-size: 0.75rem; /* text-xs md */
+                gap: 0.375rem;
+            }
+            .badge-category i { font-size: 0.75rem; }
+            .badge-text-mobile { display: none; }
+            .badge-text-desktop { display: inline; }
+            
+            .card-content { padding: 1.5rem; }
+            
+            .date-badge {
+                top: -2rem; left: 1.5rem;
+                width: 4rem; height: 4rem;
+                padding: 0.25rem;
+                border-radius: 0.75rem;
+            }
+            .glass-card:hover .date-badge { transform: translateY(-0.5rem); }
+            .date-month { font-size: 10px; margin-bottom: 2px; }
+            .date-day { font-size: 1.5rem; }
+            
+            .card-title-container { margin-top: 2rem; margin-bottom: 0.5rem; }
+            .card-title { font-size: 1.25rem; } /* text-xl md */
+            .card-desc-container { margin-bottom: 1rem; }
+            .card-desc { font-size: 0.875rem; } /* text-sm md */
+            
+            .info-container {
+                flex-direction: row;
+                flex-wrap: wrap;
+                align-items: center;
+                gap: 1rem;
+                row-gap: 0.5rem;
+                margin-bottom: 1rem;
+                font-size: 0.875rem;
+            }
+            .info-item { gap: 0.5rem; }
+            .info-icon { width: 2.25rem; height: 2.25rem; font-size: 1rem; }
+            .info-text-loc { max-width: none; }
+            
+            .btn-action { padding: 0.75rem 0; border-radius: 1rem; }
+            .btn-inner { gap: 0.5rem; }
+            .btn-text { font-size: 1rem; }
+            .btn-icon { font-size: 0.875rem; }
+            
+            .empty-icon { font-size: 3.75rem; }
+            .empty-text { font-size: 1.5rem; }
+        }
+
+        @media (min-width: 1024px) {
+            .px-2 { padding-left: 2rem; padding-right: 2rem; }
+            h1 { font-size: 4.5rem; }
+            .grid-container { gap: 2rem; }
+        }
+        
+        /* Utility class generated for line clamping */
+        .line-clamp-2-md {
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;  
+            overflow: hidden;
+        }
+
     </style>
 </head>
 <body>
 
-    <!-- Dynamic Background -->
     <div class="blob-container">
         <div class="blob blob-1"></div>
         <div class="blob blob-2"></div>
         <div class="blob blob-3"></div>
     </div>
 
-    <!-- Main Container -->
-    <div class="container">
+    <div class="max-w-7xl mx-auto px-2 py-12 relative z-10">
         
         <!-- Header -->
-        <header>
-            <h1>
-                <span class="shimmer-text">Agenda de Eventos</span>
+        <header class="text-center">
+            <h1 class="font-extrabold tracking-tight">
+                <span class="text-shimmer">
+                    Agenda de Eventos
+                </span>
             </h1>
             <div class="header-divider"></div>
         </header>
 
         <!-- Events Grid -->
-        <div id="events-grid" class="events-grid">
-            <!-- Cards serán inyectadas por JS -->
+        <div id="events-grid" class="grid-container">
+            <!-- Cards will be injected here via JS -->
         </div>
 
         <!-- Empty State -->
@@ -386,25 +561,26 @@
     </div>
 
     <script>
-        // --- Configuración de Categorías (Con variables CSS nativas) ---
+        // --- Configuration ---
+        // Hex colors for exact matching and generic variables
         const categoryConfig = {
-            ecologica: { label: 'Ecológica', icon: 'fa-leaf', color: '#10b981', gradStart: '#4ade80', gradEnd: '#059669' },
-            cultural: { label: 'Cultural', icon: 'fa-palette', color: '#f97316', gradStart: '#fb923c', gradEnd: '#ef4444' },
-            socioeconomica: { label: 'Socioeconómica', icon: 'fa-handshake', color: '#eab308', gradStart: '#facc15', gradEnd: '#d97706' },
-            espiritual: { label: 'Espiritual', icon: 'fa-praying-hands', color: '#a855f7', gradStart: '#c084fc', gradEnd: '#7c3aed' },
-            psicoafectiva: { label: 'Psicoafectiva', icon: 'fa-heart', color: '#ec4899', gradStart: '#f472b6', gradEnd: '#e11d48' },
-            acompanamiento: { label: 'Acompañamiento', icon: 'fa-users', color: '#3b82f6', gradStart: '#60a5fa', gradEnd: '#4f46e5' },
-            fisica: { label: 'Física', icon: 'fa-running', color: '#ef4444', gradStart: '#f87171', gradEnd: '#e11d48' },
-            pastoral: { label: 'Pastoral', icon: 'fa-dove', color: '#6366f1', gradStart: '#818cf8', gradEnd: '#2563eb' },
-            default: { label: 'Evento', icon: 'fa-calendar-day', color: '#6b7280', gradStart: '#9ca3af', gradEnd: '#4b5563' }
+            ecologica: { label: 'Ecológica', icon: 'fa-leaf', color: '#10b981', gradient: 'linear-gradient(to right, #4ade80, #059669)' },
+            cultural: { label: 'Cultural', icon: 'fa-palette', color: '#f97316', gradient: 'linear-gradient(to right, #fb923c, #ef4444)' },
+            socioeconomica: { label: 'Socioeconómica', icon: 'fa-handshake', color: '#eab308', gradient: 'linear-gradient(to right, #facc15, #d97706)' },
+            espiritual: { label: 'Espiritual', icon: 'fa-praying-hands', color: '#a855f7', gradient: 'linear-gradient(to right, #c084fc, #7c3aed)' },
+            psicoafectiva: { label: 'Psicoafectiva', icon: 'fa-heart', color: '#ec4899', gradient: 'linear-gradient(to right, #f472b6, #e11d48)' },
+            acompanamiento: { label: 'Acompañamiento', icon: 'fa-users', color: '#3b82f6', gradient: 'linear-gradient(to right, #60a5fa, #4f46e5)' },
+            fisica: { label: 'Física', icon: 'fa-running', color: '#ef4444', gradient: 'linear-gradient(to right, #f87171, #e11d48)' },
+            pastoral: { label: 'Pastoral', icon: 'fa-dove', color: '#6366f1', gradient: 'linear-gradient(to right, #818cf8, #2563eb)' },
+            default: { label: 'Evento', icon: 'fa-calendar-day', color: '#6b7280', gradient: 'linear-gradient(to right, #9ca3af, #4b5563)' }
         };
 
-        // --- Data de Eventos ---
+        // --- Data ---
         const initialEvents = [
             { 
                 id: 1, 
                 title: "Eucaristía diaria", 
-                description: "Participa de la Santa Misa de lunes a viernes y fortalece tu espíritu junto a toda la comunidad universitaria.",
+                description: "Participa de la Santa Misa de lunes a viernes.",
                 category: "espiritual", 
                 date: "2026-09-30",
                 time: "12:00", 
@@ -417,11 +593,11 @@
 
         let events = [...initialEvents];
 
-        // --- Elementos del DOM ---
+        // --- DOM Elements ---
         const grid = document.getElementById('events-grid');
         const emptyState = document.getElementById('empty-state');
 
-        // --- Funciones de Formateo ---
+        // --- Formatting Functions ---
         const getSafeDate = (dateStr) => {
             const [year, month, day] = dateStr.split('-');
             return new Date(year, month - 1, day);
@@ -437,6 +613,7 @@
         const getMonth = (dateStr) => getSafeDate(dateStr).toLocaleDateString('es-ES', {month: 'short'}).replace('.', '').toUpperCase();
         const getDay = (dateStr) => getSafeDate(dateStr).getDate();
 
+        // --- Render Function ---
         const renderEvents = () => {
             grid.innerHTML = '';
             
@@ -445,50 +622,81 @@
             } else {
                 emptyState.style.display = 'none';
                 
+                // Check if device is desktop for line clamp classes
+                const isDesktop = window.innerWidth >= 768;
+                const clampClass = isDesktop ? 'line-clamp-2-md' : 'line-clamp-3';
+                
                 events.forEach((event, index) => {
                     const config = categoryConfig[event.category] || categoryConfig.default;
                     
                     const card = document.createElement('div');
                     card.className = 'glass-card';
                     card.style.animationDelay = `${index * 150}ms`;
-                    // Inyectar colores de categoría dinámicamente como variables CSS
+                    // Assign category color for hover effects
                     card.style.setProperty('--cat-color', config.color);
-                    card.style.setProperty('--cat-grad-start', config.gradStart);
-                    card.style.setProperty('--cat-grad-end', config.gradEnd);
                     
                     card.innerHTML = `
-                        <div class="card-image-wrapper">
-                            <img src="${event.image}" alt="${event.title}" class="card-image">
-                            <div class="card-image-overlay"></div>
-                            <div class="category-badge">
-                                <i class="fas ${config.icon}" style="color: var(--cat-color)"></i> 
-                                <span>${config.label}</span>
+                        <div class="card-img-container">
+                            <img src="${event.image}" alt="${event.title}" class="card-img">
+                            
+                            <!-- Modern Overlay -->
+                            <div class="img-overlay"></div>
+
+                            <!-- Category Badge -->
+                            <div class="badge-category">
+                                <i class="fas ${config.icon}" style="color: ${config.color}"></i> 
+                                <span class="badge-text-desktop">${config.label}</span> 
+                                <span class="badge-text-mobile">${config.label}</span>
                             </div>
                         </div>
                         
                         <div class="card-content">
+                            
+                            <!-- Fecha Flotante -->
                             <div class="date-badge">
                                 <span class="date-month">${getMonth(event.date)}</span>
                                 <span class="date-day">${getDay(event.date)}</span>
                             </div>
 
-                            <h3 class="card-title" title="${event.title}">${event.title}</h3>
-                            <p class="card-desc">${event.description || 'Descripción breve disponible.'}</p>
+                            <!-- Título -->
+                            <div class="card-title-container">
+                                <h3 class="card-title ${clampClass}" title="${event.title}">
+                                    ${event.title}
+                                </h3>
+                            </div>
+
+                            <!-- Descripción -->
+                            <div class="card-desc-container">
+                                <p class="card-desc ${clampClass}">
+                                    ${event.description || 'Descripción breve disponible.'}
+                                </p>
+                            </div>
                             
-                            <div class="card-info-group">
+                            <!-- Info -->
+                            <div class="info-container">
                                 <div class="info-item">
-                                    <div class="info-icon"><i class="far fa-clock"></i></div>
-                                    <span class="info-text">${formatTime(event.time)}</span>
+                                    <div class="info-icon">
+                                        <i class="far fa-clock"></i>
+                                    </div>
+                                    <span class="info-text-time">${formatTime(event.time)}</span>
                                 </div>
                                 <div class="info-item">
-                                    <div class="info-icon"><i class="fas fa-link"></i></div>
-                                    <span class="info-text">${event.location || 'Campus'}</span>
+                                    <div class="info-icon">
+                                        <i class="fas fa-link"></i>
+                                    </div>
+                                    <span class="info-text-loc" title="${event.location || 'Campus'}">${event.location || 'Campus'}</span>
                                 </div>
                             </div>
                             
-                            <a href="${event.link}" target="_blank" class="btn-action">
-                                ${event.cta || 'Participa'} <i class="fas fa-arrow-right" style="margin-left: 0.5rem; font-size: 0.875rem;"></i>
-                            </a>
+                            <!-- Botón -->
+                            <div style="margin-top: auto; position: relative; z-index: 20;">
+                                <a href="${event.link}" target="_blank" class="btn-action btn-shine" style="background-image: ${config.gradient};">
+                                    <span class="btn-inner">
+                                        <span class="btn-text">${event.cta || 'Participa'}</span> 
+                                        <i class="fas fa-arrow-right btn-icon"></i>
+                                    </span>
+                                </a>
+                            </div>
                         </div>
                     `;
                     grid.appendChild(card);
@@ -496,8 +704,17 @@
             }
         };
 
-        // Renderizar inicial
+        // Render on load
         renderEvents();
+        
+        // Handle window resize for dynamic class adjustments (like line-clamp)
+        window.addEventListener('resize', () => {
+             // Only re-render if it crosses the breakpoint to save performance
+             const currentWidth = window.innerWidth;
+             if(currentWidth === 768 || currentWidth === 767) {
+                  renderEvents();
+             }
+        });
 
     </script>
 </body>
