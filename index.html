@@ -3,55 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Prográmate | Eventos Anteriores</title>
+    <title>Prográmate | Agenda Universitaria</title>
     
     <!-- Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
-    
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
+    
     <style>
         :root {
-            /* Theme Colors */
             --primary: #6C63FF;
             --secondary: #FF6584;
             --accent: #FFD93D;
             --bg-color: #f8fafc;
-            
-            /* Grays */
-            --gray-100: #f3f4f6;
-            --gray-300: #d1d5db;
-            --gray-400: #9ca3af;
-            --gray-500: #6b7280;
-            --gray-800: #1f2937;
-            
-            /* Category Gradients */
-            --grad-ecologica: linear-gradient(to right, #4ade80, #059669);
-            --grad-cultural: linear-gradient(to right, #fb923c, #ef4444);
-            --grad-socioeconomica: linear-gradient(to right, #facc15, #d97706);
-            --grad-espiritual: linear-gradient(to right, #c084fc, #7c3aed);
-            --grad-psicoafectiva: linear-gradient(to right, #f472b6, #e11d48);
-            --grad-acompanamiento: linear-gradient(to right, #60a5fa, #4f46e5);
-            --grad-fisica: linear-gradient(to right, #f87171, #e11d48);
-            --grad-pastoral: linear-gradient(to right, #818cf8, #2563eb);
-            --grad-default: linear-gradient(to right, #9ca3af, #4b5563);
-
-            /* Category Text/Hover Colors */
-            --color-ecologica: #22c55e;     --hover-ecologica: #16a34a;
-            --color-cultural: #f97316;      --hover-cultural: #ea580c;
-            --color-socioeconomica: #eab308;--hover-socioeconomica: #ca8a04;
-            --color-espiritual: #a855f7;    --hover-espiritual: #9333ea;
-            --color-psicoafectiva: #ec4899; --hover-psicoafectiva: #db2777;
-            --color-acompanamiento: #3b82f6;--hover-acompanamiento: #2563eb;
-            --color-fisica: #ef4444;        --hover-fisica: #dc2626;
-            --color-pastoral: #6366f1;      --hover-pastoral: #4f46e5;
-            --color-default: #6b7280;       --hover-default: #4b5563;
+            --text-main: #1f2937;
+            --text-muted: #6b7280;
+            --text-light: #9ca3af;
         }
 
-        * {
+        *, *::before, *::after {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
@@ -60,17 +30,18 @@
         body {
             font-family: 'Outfit', sans-serif;
             background-color: var(--bg-color);
-            color: var(--gray-800);
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
+            color: var(--text-main);
+            overflow-x: hidden;
             min-height: 100vh;
             position: relative;
-            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
         }
 
+        /* Selection Color */
         ::selection {
             background-color: var(--accent);
-            color: black;
+            color: #000;
         }
 
         /* Custom Scrollbar */
@@ -78,93 +49,124 @@
         ::-webkit-scrollbar-track { background: #f1f1f1; }
         ::-webkit-scrollbar-thumb { background: var(--primary); border-radius: 4px; }
 
-        .container {
-            max-width: 80rem; /* max-w-7xl */
-            margin: 0 auto;
-            padding: 3rem 0.5rem; /* px-2 py-12 */
-            position: relative;
-            z-index: 10;
+        /* Typography Utilities */
+        .text-center { text-align: center; }
+        .font-bold { font-weight: 700; }
+        .font-extrabold { font-weight: 800; }
+        .font-black { font-weight: 900; }
+        .font-medium { font-weight: 500; }
+        .tracking-tight { letter-spacing: -0.025em; }
+        .tracking-widest { letter-spacing: 0.1em; }
+        .uppercase { text-transform: uppercase; }
+        
+        .truncate {
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .line-clamp-3 {
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;  
+            overflow: hidden;
+        }
+
+        .max-w-7xl { max-width: 80rem; }
+        .mx-auto { margin-left: auto; margin-right: auto; }
+        .px-2 { padding-left: 0.5rem; padding-right: 0.5rem; }
+        .py-12 { padding-top: 3rem; padding-bottom: 3rem; }
+        .relative { position: relative; }
+        .absolute { position: absolute; }
+        .inset-0 { top: 0; right: 0; bottom: 0; left: 0; }
+        .z-10 { z-index: 10; }
+        .z-20 { z-index: 20; }
+        
+        /* Background Blobs */
+        .blob-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: -1;
+            overflow: hidden;
+            background: #fff;
         }
         
-        @media (min-width: 640px) { .container { padding-left: 1rem; padding-right: 1rem; } }
-        @media (min-width: 768px) { .container { padding-left: 1.5rem; padding-right: 1.5rem; } }
-        @media (min-width: 1024px) { .container { padding-left: 2rem; padding-right: 2rem; } }
+        .blob {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.8;
+            mix-blend-mode: multiply; 
+            animation: blobAnim 10s infinite alternate;
+        }
+        
+        .blob-1 { background-color: #d8b4fe; width: 24rem; height: 24rem; top: 0; left: 0; }
+        .blob-2 { background-color: #f9a8d4; width: 24rem; height: 24rem; bottom: 0; right: 0; animation-delay: 2s; }
+        .blob-3 { 
+            background-color: #a5f3fc; 
+            width: 20rem; height: 20rem; 
+            top: 50%; left: 50%; 
+            transform: translate(-50%, -50%); 
+            animation-delay: 4s; 
+        }
 
-        /* Header Styling */
-        .header {
-            text-align: center;
+        header {
             margin-bottom: 2rem;
             opacity: 0;
             animation: fadeUp 0.8s ease-out forwards;
         }
-        @media (min-width: 768px) { .header { margin-bottom: 3rem; } }
-
-        .header h1 {
-            font-size: 1.875rem; /* text-3xl */
-            font-weight: 800;
-            letter-spacing: -0.025em;
+        
+        h1 {
+            font-size: 2.25rem;
+            line-height: 2.5rem;
             margin-bottom: 1rem;
         }
-        @media (min-width: 768px) { .header h1 { font-size: 3rem; } }
-        @media (min-width: 1024px) { .header h1 { font-size: 4.5rem; } }
 
         .text-shimmer {
-            background: linear-gradient(to right, var(--primary), #a855f7, var(--secondary));
+            background-image: linear-gradient(to right, var(--primary), #a855f7, var(--secondary));
+            background-size: 200% auto;
+            color: transparent;
             -webkit-background-clip: text;
             background-clip: text;
-            color: transparent;
-            background-size: 200% auto;
             animation: textShimmer 3s ease-in-out infinite alternate;
         }
 
         .header-divider {
             height: 0.25rem;
             width: 4rem;
-            background: linear-gradient(to right, var(--primary), var(--secondary));
+            background-image: linear-gradient(to right, var(--primary), var(--secondary));
             margin: 0 auto;
             border-radius: 9999px;
         }
-        @media (min-width: 768px) { .header-divider { width: 6rem; } }
 
-        .header p {
-            margin-top: 1rem;
-            color: var(--gray-500);
-            font-weight: 500;
-            max-width: 36rem;
-            margin-left: auto;
-            margin-right: auto;
-            font-size: 0.875rem;
-        }
-        @media (min-width: 768px) { .header p { font-size: 1rem; } }
-
-        /* Events Grid */
-        .events-grid {
+        .grid-container {
             display: grid;
+            /* SE CONSERVA: 3 Columnas forzadas en todos los dispositivos */
             grid-template-columns: repeat(3, minmax(0, 1fr));
-            gap: 0.5rem;
+            gap: 0.5rem; /* gap-2 */
         }
-        @media (min-width: 640px) { .events-grid { gap: 1rem; } }
-        @media (min-width: 768px) { .events-grid { gap: 1.5rem; } }
-        @media (min-width: 1024px) { .events-grid { gap: 2rem; } }
 
         .glass-card {
             background: rgba(255, 255, 255, 0.7);
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
             border: 1px solid rgba(255, 255, 255, 0.8);
+            border-color: transparent;
             box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.07);
             transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             position: relative;
-            border-radius: 0.75rem;
+            overflow: hidden;
             display: flex;
             flex-direction: column;
             width: 100%;
             height: 100%;
+            border-radius: 0.75rem; /* rounded-xl */
             opacity: 0;
             animation: fadeUp 0.8s ease-out forwards;
-            overflow: hidden;
         }
-        @media (min-width: 768px) { .glass-card { border-radius: 2rem; } }
 
         .glass-card:hover {
             transform: translateY(-8px) scale(1.02);
@@ -187,47 +189,45 @@
             transition: 0s; 
             pointer-events: none;
         }
+
         .glass-card:hover::after {
             left: 200%;
             transition: 0.75s ease-in-out;
         }
 
-        /* Card Image & Badge */
-        .card-img-wrapper {
+        .card-img-container {
             position: relative;
             width: 100%;
-            aspect-ratio: 4/3;
+            aspect-ratio: 4 / 3;
             overflow: hidden;
             flex-shrink: 0;
-            filter: grayscale(20%);
-            transition: all 0.5s;
         }
-        @media (min-width: 768px) {
-            .card-img-wrapper { height: 12rem; aspect-ratio: auto; }
-        }
-        .glass-card:hover .card-img-wrapper { filter: grayscale(0%); }
 
-        .card-img-wrapper img {
+        .card-img {
             width: 100%;
             height: 100%;
             object-fit: cover;
             transition: transform 0.7s;
         }
-        .glass-card:hover .card-img-wrapper img { transform: scale(1.1); }
 
-        .card-overlay {
+        .glass-card:hover .card-img {
+            transform: scale(1.1);
+        }
+
+        .img-overlay {
             position: absolute;
             inset: 0;
-            background: linear-gradient(to top, rgba(0,0,0,0.6), transparent, transparent);
+            background-image: linear-gradient(to top, rgba(0,0,0,0.6), transparent, transparent);
             opacity: 0.8;
         }
 
-        .card-badge {
+        .badge-category {
             position: absolute;
             top: 0.5rem;
             right: 0.5rem;
-            background: rgba(255, 255, 255, 0.9);
+            background-color: rgba(255, 255, 255, 0.9);
             backdrop-filter: blur(4px);
+            /* SE CONSERVA: Tamaño de fuente 8px para móvil */
             font-size: 8px;
             font-weight: 700;
             padding: 0.25rem 0.5rem;
@@ -236,20 +236,19 @@
             display: flex;
             align-items: center;
             gap: 0.25rem;
-            color: var(--gray-800);
+            color: var(--text-main);
             border: 1px solid white;
             z-index: 10;
         }
-        @media (min-width: 768px) {
-            .card-badge { top: 1rem; right: 1rem; font-size: 0.75rem; padding: 0.375rem 0.75rem; gap: 0.375rem; }
-        }
 
-        .badge-text-mobile { display: inline-block; max-width: 50px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-        .badge-text-desktop { display: none; }
-        @media (min-width: 768px) {
-            .badge-text-mobile { display: none; }
-            .badge-text-desktop { display: inline; }
+        .badge-text-mobile {
+            display: inline;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            max-width: 50px;
         }
+        .badge-text-desktop { display: none; }
 
         .card-content {
             padding: 0.5rem;
@@ -257,15 +256,14 @@
             display: flex;
             flex-direction: column;
             position: relative;
-            background: rgba(255, 255, 255, 0.4);
+            background-color: rgba(255, 255, 255, 0.4);
         }
-        @media (min-width: 768px) { .card-content { padding: 1.5rem; } }
 
-        .card-date {
+        .date-badge {
             position: absolute;
             top: -1rem;
             left: 0.5rem;
-            background: white;
+            background-color: white;
             border-radius: 0.5rem;
             box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
             padding: 0.125rem;
@@ -276,77 +274,134 @@
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            border: 1px solid var(--gray-100);
+            border: 1px solid #f3f4f6;
             transition: transform 0.3s;
             z-index: 10;
         }
-        @media (min-width: 768px) {
-            .card-date { top: -2rem; left: 1.5rem; border-radius: 0.75rem; padding: 0.25rem; width: 4rem; height: 4rem; }
-        }
-        .glass-card:hover .card-date { transform: translateY(-0.25rem); }
-        @media (min-width: 768px) { .glass-card:hover .card-date { transform: translateY(-0.5rem); } }
-
-        .card-date-month { font-size: 7px; font-weight: 700; color: var(--gray-400); text-transform: uppercase; letter-spacing: 0.1em; line-height: 1; margin-bottom: 1px; }
-        .card-date-day { font-size: 0.875rem; font-weight: 900; color: var(--gray-800); line-height: 1; }
-        @media (min-width: 768px) {
-            .card-date-month { font-size: 10px; margin-bottom: 2px; }
-            .card-date-day { font-size: 1.5rem; }
+        
+        .glass-card:hover .date-badge {
+            transform: translateY(-0.25rem);
         }
 
-        .card-title-container { margin-top: 1.75rem; margin-bottom: 0.25rem; }
-        @media (min-width: 768px) { .card-title-container { margin-top: 2rem; margin-bottom: 0.5rem; } }
+        /* SE CONSERVA: Tamaños de fuente extremadamente pequeños */
+        .date-month { font-size: 7px; font-weight: 700; color: #9ca3af; text-transform: uppercase; letter-spacing: 0.1em; line-height: 1; margin-bottom: 1px; }
+        .date-day { font-size: 0.875rem; font-weight: 900; color: var(--text-main); line-height: 1; }
+
+        .card-title-container {
+            margin-top: 1.75rem;
+            margin-bottom: 0.25rem;
+        }
 
         .card-title {
+            /* SE CONSERVA: Tamaño de fuente 10px */
             font-size: 10px;
             font-weight: 700;
-            color: var(--gray-800);
+            color: var(--text-main);
             line-height: 1.25;
             transition: color 0.3s;
-            display: -webkit-box;
-            -webkit-line-clamp: 3;
-            -webkit-box-orient: vertical;
-            overflow: hidden;
-        }
-        @media (min-width: 768px) {
-            .card-title { font-size: 1.25rem; -webkit-line-clamp: 2; }
         }
 
-        .card-desc-container { margin-bottom: 1rem; flex: 1; }
-        @media (min-width: 768px) { .card-desc-container { margin-bottom: 1.5rem; } }
-        
+        .glass-card:hover .card-title {
+            color: var(--cat-color);
+        }
+
+        .card-desc-container {
+            margin-bottom: 0.5rem;
+        }
+
         .card-desc {
+            /* SE CONSERVA: Tamaño de fuente 9px */
             font-size: 9px;
-            color: var(--gray-500);
+            color: var(--text-muted);
             font-weight: 500;
             line-height: 1.625;
-            display: -webkit-box;
-            -webkit-line-clamp: 4;
-            -webkit-box-orient: vertical;
-            overflow: hidden;
         }
-        @media (min-width: 768px) { .card-desc { font-size: 0.875rem; -webkit-line-clamp: 3; } }
 
-        .card-action { margin-top: auto; position: relative; z-index: 20; }
-        
-        .btn-shine {
+        .info-container {
+            display: flex;
+            flex-direction: column;
+            gap: 0.25rem;
+            margin-bottom: 0.5rem;
+            /* SE CONSERVA: Tamaño de fuente 9px */
+            font-size: 9px;
+            color: var(--text-muted);
+            font-weight: 500;
+        }
+
+        .info-item {
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+            border-radius: 0.5rem;
+            transition: background-color 0.2s;
+        }
+
+        .info-item:hover { background-color: rgba(255, 255, 255, 0.5); }
+
+        .info-icon {
+            width: 1rem;
+            height: 1rem;
+            border-radius: 9999px;
+            background-color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+            color: #9ca3af;
+            /* SE CONSERVA: Tamaño de fuente 8px */
+            font-size: 8px;
+            transition: color 0.2s;
+            flex-shrink: 0;
+        }
+
+        .info-item:hover .info-icon { color: var(--cat-color); }
+
+        .info-text-time { font-weight: 700; color: #374151; white-space: nowrap; }
+        .info-text-loc { font-weight: 700; color: #374151; overflow: hidden; text-overflow: ellipsis; max-width: 70px; white-space: nowrap; }
+
+        .btn-action {
+            margin-top: auto;
             position: relative;
             overflow: hidden;
-            display: block;
             width: 100%;
+            display: block;
             text-align: center;
             color: white;
             font-weight: 700;
             padding: 0.375rem 0;
             border-radius: 0.5rem;
-            text-decoration: none;
             transition: all 0.3s;
-            box-shadow: 0 1px 2px 0 rgba(0,0,0,0.05);
+            box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+            text-decoration: none;
+            /* Background gradiente via inline style */
         }
-        @media (min-width: 768px) {
-            .btn-shine { padding: 0.75rem 0; border-radius: 1rem; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); }
+
+        .btn-action:hover {
+            transform: scale(1.02);
+            box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1);
         }
-        
-        .glass-card:hover .btn-shine { transform: scale(1.02); box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1); }
+
+        .btn-inner {
+            position: relative;
+            z-index: 10;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.25rem;
+        }
+
+        .btn-text {
+            /* SE CONSERVA: Tamaño de fuente 9px */
+            font-size: 9px;
+        }
+
+        .btn-icon {
+            /* SE CONSERVA: Tamaño de fuente 8px */
+            font-size: 8px;
+            transition: transform 0.3s;
+        }
+
+        .glass-card:hover .btn-icon { transform: translateX(0.25rem); }
 
         .btn-shine::after {
             content: '';
@@ -360,236 +415,179 @@
             animation: shine 4s infinite;
         }
 
-        .btn-content { position: relative; z-index: 10; display: flex; align-items: center; justify-content: center; gap: 0.25rem; }
-        @media (min-width: 768px) { .btn-content { gap: 0.5rem; } }
-        
-        .btn-text { font-size: 9px; }
-        .btn-icon { font-size: 8px; transition: transform 0.3s; }
-        @media (min-width: 768px) {
-            .btn-text { font-size: 1rem; }
-            .btn-icon { font-size: 0.875rem; }
-        }
-        .glass-card:hover .btn-icon { transform: scale(1.1); }
-
         /* Empty State */
-        .empty-state { text-align: center; padding: 5rem 0; display: none; }
-        .empty-icon { font-size: 2.25rem; margin-bottom: 1rem; color: var(--gray-300); }
-        .empty-text { font-size: 1.25rem; font-weight: 700; color: var(--gray-400); }
-        @media (min-width: 768px) {
-            .empty-icon { font-size: 3.75rem; }
-            .empty-text { font-size: 1.5rem; }
+        .empty-state {
+            display: none;
+            text-align: center;
+            padding: 5rem 0;
         }
+        .empty-icon { font-size: 2.25rem; margin-bottom: 1rem; color: #d1d5db; }
+        .empty-text { font-size: 1.25rem; font-weight: 700; color: #9ca3af; line-height: 2rem;}
 
-        .blob-container {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            z-index: -1;
-            overflow: hidden;
-            background: #fff;
-        }
-        .blob {
-            position: absolute;
-            border-radius: 50%;
-            filter: blur(80px);
-            opacity: 0.8;
-            mix-blend-mode: multiply; 
-            animation: blob 15s infinite alternate;
-        }
-        .blob-1 { background-color: #d8b4fe; width: 24rem; height: 24rem; top: 0; left: 0; }
-        .blob-2 { background-color: #f9a8d4; width: 24rem; height: 24rem; bottom: 0; right: 0; animation-delay: 2s; }
-        .blob-3 { background-color: #a5f3fc; width: 20rem; height: 20rem; top: 50%; left: 50%; transform: translate(-50%, -50%); animation-delay: 4s; }
-
-        @keyframes blob {
+        @keyframes blobAnim {
             0% { transform: translate(0px, 0px) scale(1); }
             33% { transform: translate(30px, -50px) scale(1.1); }
             66% { transform: translate(-20px, 20px) scale(0.9); }
             100% { transform: translate(0px, 0px) scale(1); }
         }
+
         @keyframes fadeUp {
             0% { opacity: 0; transform: translateY(40px); }
             100% { opacity: 1; transform: translateY(0); }
         }
+
         @keyframes textShimmer {
             0% { background-position: 0% 50%; }
             100% { background-position: 100% 50%; }
         }
+
         @keyframes shine {
             0% { left: -100%; }
             20% { left: 100%; }
             100% { left: 100%; }
         }
 
-        /* Dynamic Category Classes utilized by JavaScript */
-        .text-cat-ecologica { color: var(--color-ecologica); }
-        .text-cat-cultural { color: var(--color-cultural); }
-        .text-cat-socioeconomica { color: var(--color-socioeconomica); }
-        .text-cat-espiritual { color: var(--color-espiritual); }
-        .text-cat-psicoafectiva { color: var(--color-psicoafectiva); }
-        .text-cat-acompanamiento { color: var(--color-acompanamiento); }
-        .text-cat-fisica { color: var(--color-fisica); }
-        .text-cat-pastoral { color: var(--color-pastoral); }
-        .text-cat-default { color: var(--color-default); }
+        @media (min-width: 640px) {
+            .px-2 { padding-left: 1rem; padding-right: 1rem; }
+            .grid-container { gap: 1rem; }
+        }
 
-        .glass-card:hover .hover-cat-ecologica { color: var(--hover-ecologica); }
-        .glass-card:hover .hover-cat-cultural { color: var(--hover-cultural); }
-        .glass-card:hover .hover-cat-socioeconomica { color: var(--hover-socioeconomica); }
-        .glass-card:hover .hover-cat-espiritual { color: var(--hover-espiritual); }
-        .glass-card:hover .hover-cat-psicoafectiva { color: var(--hover-psicoafectiva); }
-        .glass-card:hover .hover-cat-acompanamiento { color: var(--hover-acompanamiento); }
-        .glass-card:hover .hover-cat-fisica { color: var(--hover-fisica); }
-        .glass-card:hover .hover-cat-pastoral { color: var(--hover-pastoral); }
-        .glass-card:hover .hover-cat-default { color: var(--hover-default); }
+        @media (min-width: 768px) {
+            .px-2 { padding-left: 1.5rem; padding-right: 1.5rem; }
+            header { margin-bottom: 3rem; }
+            h1 { font-size: 3rem; line-height: 1; }
+            .header-divider { width: 6rem; }
+            
+            .grid-container { gap: 1.5rem; }
+            .glass-card { border-radius: 2rem; }
+            .card-img-container { height: 12rem; aspect-ratio: auto; }
+            
+            .badge-category {
+                top: 1rem; right: 1rem;
+                padding: 0.375rem 0.75rem;
+                font-size: 0.75rem; /* text-xs md */
+                gap: 0.375rem;
+            }
+            .badge-category i { font-size: 0.75rem; }
+            .badge-text-mobile { display: none; }
+            .badge-text-desktop { display: inline; }
+            
+            .card-content { padding: 1.5rem; }
+            
+            .date-badge {
+                top: -2rem; left: 1.5rem;
+                width: 4rem; height: 4rem;
+                padding: 0.25rem;
+                border-radius: 0.75rem;
+            }
+            .glass-card:hover .date-badge { transform: translateY(-0.5rem); }
+            .date-month { font-size: 10px; margin-bottom: 2px; }
+            .date-day { font-size: 1.5rem; }
+            
+            .card-title-container { margin-top: 2rem; margin-bottom: 0.5rem; }
+            .card-title { font-size: 1.25rem; } /* text-xl md */
+            .card-desc-container { margin-bottom: 1rem; }
+            .card-desc { font-size: 0.875rem; } /* text-sm md */
+            
+            .info-container {
+                flex-direction: row;
+                flex-wrap: wrap;
+                align-items: center;
+                gap: 1rem;
+                row-gap: 0.5rem;
+                margin-bottom: 1rem;
+                font-size: 0.875rem;
+            }
+            .info-item { gap: 0.5rem; }
+            .info-icon { width: 2.25rem; height: 2.25rem; font-size: 1rem; }
+            .info-text-loc { max-width: none; }
+            
+            .btn-action { padding: 0.75rem 0; border-radius: 1rem; }
+            .btn-inner { gap: 0.5rem; }
+            .btn-text { font-size: 1rem; }
+            .btn-icon { font-size: 0.875rem; }
+            
+            .empty-icon { font-size: 3.75rem; }
+            .empty-text { font-size: 1.5rem; }
+        }
 
-        .bg-cat-ecologica { background: var(--grad-ecologica); }
-        .bg-cat-cultural { background: var(--grad-cultural); }
-        .bg-cat-socioeconomica { background: var(--grad-socioeconomica); }
-        .bg-cat-espiritual { background: var(--grad-espiritual); }
-        .bg-cat-psicoafectiva { background: var(--grad-psicoafectiva); }
-        .bg-cat-acompanamiento { background: var(--grad-acompanamiento); }
-        .bg-cat-fisica { background: var(--grad-fisica); }
-        .bg-cat-pastoral { background: var(--grad-pastoral); }
-        .bg-cat-default { background: var(--grad-default); }
+        @media (min-width: 1024px) {
+            .px-2 { padding-left: 2rem; padding-right: 2rem; }
+            h1 { font-size: 4.5rem; }
+            .grid-container { gap: 2rem; }
+        }
+        
+        /* Utility class generated for line clamping */
+        .line-clamp-2-md {
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;  
+            overflow: hidden;
+        }
 
     </style>
 </head>
 <body>
 
-    <!-- Dynamic Background -->
     <div class="blob-container">
         <div class="blob blob-1"></div>
         <div class="blob blob-2"></div>
         <div class="blob blob-3"></div>
     </div>
 
-    <!-- Main Container -->
-    <div class="container">
+    <div class="max-w-7xl mx-auto px-2 py-12 relative z-10">
         
         <!-- Header -->
-        <header class="header">
-            <h1>
+        <header class="text-center">
+            <h1 class="font-extrabold tracking-tight">
                 <span class="text-shimmer">
-                    Eventos Anteriores
+                    Agenda de Eventos
                 </span>
             </h1>
             <div class="header-divider"></div>
-            <p>
-                Revive los mejores momentos de las actividades que hemos compartido en nuestra comunidad universitaria.
-            </p>
         </header>
 
         <!-- Events Grid -->
-        <div id="events-grid" class="events-grid">
+        <div id="events-grid" class="grid-container">
             <!-- Cards will be injected here via JS -->
         </div>
 
         <!-- Empty State -->
         <div id="empty-state" class="empty-state">
             <div class="empty-icon">🍃</div>
-            <h3 class="empty-text">Aún no hay eventos pasados...</h3>
+            <h3 class="empty-text">Todo tranquilo por aquí...</h3>
         </div>
 
     </div>
 
     <script>
         // --- Configuration ---
-        // Eliminamos las dependencias de clases específicas de Tailwind y usamos referencias genéricas a categorías
+        // Hex colors for exact matching and generic variables
         const categoryConfig = {
-            ecologica: { label: 'Ecológica', icon: 'fa-leaf' },
-            cultural: { label: 'Cultural', icon: 'fa-palette' },
-            socioeconomica: { label: 'Socioeconómica', icon: 'fa-handshake' },
-            espiritual: { label: 'Espiritual', icon: 'fa-praying-hands' },
-            psicoafectiva: { label: 'Psicoafectiva', icon: 'fa-heart' },
-            acompanamiento: { label: 'Acompañamiento', icon: 'fa-users' },
-            fisica: { label: 'Física', icon: 'fa-running' },
-            pastoral: { label: 'Pastoral', icon: 'fa-dove' },
-            default: { label: 'Evento', icon: 'fa-calendar-day' }
+            ecologica: { label: 'Ecológica', icon: 'fa-leaf', color: '#10b981', gradient: 'linear-gradient(to right, #4ade80, #059669)' },
+            cultural: { label: 'Cultural', icon: 'fa-palette', color: '#f97316', gradient: 'linear-gradient(to right, #fb923c, #ef4444)' },
+            socioeconomica: { label: 'Socioeconómica', icon: 'fa-handshake', color: '#eab308', gradient: 'linear-gradient(to right, #facc15, #d97706)' },
+            espiritual: { label: 'Espiritual', icon: 'fa-praying-hands', color: '#a855f7', gradient: 'linear-gradient(to right, #c084fc, #7c3aed)' },
+            psicoafectiva: { label: 'Psicoafectiva', icon: 'fa-heart', color: '#ec4899', gradient: 'linear-gradient(to right, #f472b6, #e11d48)' },
+            acompanamiento: { label: 'Acompañamiento', icon: 'fa-users', color: '#3b82f6', gradient: 'linear-gradient(to right, #60a5fa, #4f46e5)' },
+            fisica: { label: 'Física', icon: 'fa-running', color: '#ef4444', gradient: 'linear-gradient(to right, #f87171, #e11d48)' },
+            pastoral: { label: 'Pastoral', icon: 'fa-dove', color: '#6366f1', gradient: 'linear-gradient(to right, #818cf8, #2563eb)' },
+            default: { label: 'Evento', icon: 'fa-calendar-day', color: '#6b7280', gradient: 'linear-gradient(to right, #9ca3af, #4b5563)' }
         };
 
         // --- Data ---
         const initialEvents = [
-            {
+            { 
                 id: 1, 
-                title: "Cátedra Abierta: Panamá, Centro Logístico y Financiero para las Américas.", 
-                description: "Una oportunidad para ampliar nuestra mirada, conocer nuevas perspectivas y acercarnos a la realidad económica y estratégica de Panamá.",
-                category: "cultural", 
-                date: "2026-09-17", 
-                image: "https://images.unsplash.com/photo-1668294633496-c8b9baae35c3?q=80&w=1000&auto=format&fit=crop", 
-                link: "https://youtu.be/vTdz_yoMI3M"
-            },
-            {
-                id: 2, 
-                title: "Concierto: En clave de fe, una nota para alabar al señor.", 
-                description: "Semana de la Identidad Católica 2026.",
+                title: "Eucaristía diaria", 
+                description: "Participa de la Santa Misa de lunes a viernes.",
                 category: "espiritual", 
-                date: "2026-09-03", 
-                image: "https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?q=80&w=1000&auto=format&fit=crop", 
-                link: "https://youtu.be/Ku3tYJ5HIvA"
-            },
-            {
-                id: 3, 
-                title: "LA PALABRA, ¿Luz que humaniza o instrumento que deshumaniza la vida?", 
-                description: "Semana de la Identidad Católica 2026.",
-                category: "espiritual", 
-                date: "2026-09-02", 
-                image: "https://images.unsplash.com/photo-1624384421235-1121e0b595cf?q=80&w=1000&auto=format&fit=crop", 
-                link: "https://youtu.be/ZQ5L4qYvxl0"
-            },
-            {
-                id: 4, 
-                title: "Silénciate y escucha: Oración para estudiantes, graduados y sus familias", 
-                description: "Semana de la Identidad Católica 2026.",
-                category: "espiritual", 
-                date: "2026-09-01", 
-                image: "https://images.unsplash.com/photo-1473122430480-d00e6dd25ba8?q=80&w=1000&auto=format&fit=crop", 
-                link: "https://youtu.be/b1c1rz97D10"
-            },
-            {
-                id: 5, 
-                title: "Noti Identidad UCN", 
-                description: "Semana de la Identidad Católica 2026.",
-                category: "espiritual", 
-                date: "2026-08-31", 
-                image: "https://images.unsplash.com/photo-1504465039710-0f49c0a47eb7?q=80&w=1000&auto=format&fit=crop", 
-                link: "https://youtu.be/QqbBaiMau8I"
-            },
-            {
-                id: 6, 
-                title: "Encuentro virtual de Parejas 2026", 
-                description: "Los Cinco Lenguajes del amor.",
-                category: "psicoafectiva", 
-                date: "2026-08-27", 
-                image: "https://images.unsplash.com/photo-1634268014879-ec7b2c982c5b?q=80&w=1000&auto=format&fit=crop", 
-                link: "https://youtu.be/nZeZ4gY1FMM"
-            },
-            {
-                id: 7, 
-                title: "Cátedra Abierta: La fe e identidad en La República Dominicana.", 
-                description: ".",
-                category: "cultural", 
-                date: "2026-08-20", 
-                image: "https://images.unsplash.com/photo-1684980461524-6eed0f9e30b7?q=80&w=1000&auto=format&fit=crop", 
-                link: "https://youtu.be/uLh2H9dR_sY"
-            },
-            {
-                id: 8, 
-                title: "Cátedra Abierta República Dominicana: Puerta de la evangelización en América.", 
-                description: ".",
-                category: "cultural", 
-                date: "2026-08-13", 
-                image: "https://images.unsplash.com/photo-1615305182074-29b3a07b9954?q=80&w=1000&auto=format&fit=crop", 
-                link: "https://youtu.be/31lKQ9Q7l9E"
-            },
-            {
-                id: 9, 
-                title: "Oración para estudiantes - Agosto", 
-                description: "Un espacio sencillo pero profundo: un encuentro de oración con Jesús Resucitado, donde la esperanza se renueva y el corazón vuelve a arder.",
-                category: "espiritual", 
-                date: "2026-08-11", 
-                image: "https://images.unsplash.com/photo-1642757411268-2b5b05a489aa?q=80&w=1000&auto=format&fit=crop", 
-                link: "https://youtu.be/hOvwPmb63aU"
+                date: "2026-09-30",
+                time: "12:00", 
+                image: "https://images.unsplash.com/photo-1549508477-3e484818ba7d?q=80&w=1000&auto=format&fit=crop", 
+                link: "https://www.facebook.com/SoyCatolicaDelNorte/live_videos", 
+                location: "Facebook Live",
+                cta: "Participa"
             }
         ];
 
@@ -600,10 +598,22 @@
         const emptyState = document.getElementById('empty-state');
 
         // --- Formatting Functions ---
-        const getMonth = (dateStr) => new Date(dateStr).toLocaleDateString('es-ES', {month: 'short'}).replace('.', '').toUpperCase();
-        const getDay = (dateStr) => new Date(dateStr).getDate() + 1;
+        const getSafeDate = (dateStr) => {
+            const [year, month, day] = dateStr.split('-');
+            return new Date(year, month - 1, day);
+        };
 
-        // --- STREAMING_CHUNK: Rendering the DOM elements with standard CSS classes ---
+        const formatTime = (timeString) => {
+            const [hours, minutes] = timeString.split(':');
+            const h = parseInt(hours, 10);
+            const ampm = h >= 12 ? 'PM' : 'AM';
+            return `${h % 12 || 12}:${minutes} ${ampm}`;
+        };
+
+        const getMonth = (dateStr) => getSafeDate(dateStr).toLocaleDateString('es-ES', {month: 'short'}).replace('.', '').toUpperCase();
+        const getDay = (dateStr) => getSafeDate(dateStr).getDate();
+
+        // --- Render Function ---
         const renderEvents = () => {
             grid.innerHTML = '';
             
@@ -612,55 +622,78 @@
             } else {
                 emptyState.style.display = 'none';
                 
+                // Check if device is desktop for line clamp classes
+                const isDesktop = window.innerWidth >= 768;
+                const clampClass = isDesktop ? 'line-clamp-2-md' : 'line-clamp-3';
+                
                 events.forEach((event, index) => {
-                    const catKey = categoryConfig[event.category] ? event.category : 'default';
-                    const config = categoryConfig[catKey];
+                    const config = categoryConfig[event.category] || categoryConfig.default;
                     
                     const card = document.createElement('div');
-                    card.style.animationDelay = `${index * 150}ms`;
                     card.className = 'glass-card';
+                    card.style.animationDelay = `${index * 150}ms`;
+                    // Assign category color for hover effects
+                    card.style.setProperty('--cat-color', config.color);
                     
                     card.innerHTML = `
-                        <!-- Imagen -->
-                        <div class="card-img-wrapper">
-                            <img src="${event.image}" alt="${event.title}">
-                            <div class="card-overlay"></div>
+                        <div class="card-img-container">
+                            <img src="${event.image}" alt="${event.title}" class="card-img">
+                            
+                            <!-- Modern Overlay -->
+                            <div class="img-overlay"></div>
+
                             <!-- Category Badge -->
-                            <div class="card-badge">
-                                <i class="fas ${config.icon} text-cat-${catKey}"></i> 
+                            <div class="badge-category">
+                                <i class="fas ${config.icon}" style="color: ${config.color}"></i> 
                                 <span class="badge-text-desktop">${config.label}</span> 
                                 <span class="badge-text-mobile">${config.label}</span>
                             </div>
                         </div>
                         
-                        <!-- Contenido -->
                         <div class="card-content">
+                            
                             <!-- Fecha Flotante -->
-                            <div class="card-date">
-                                <span class="card-date-month">${getMonth(event.date)}</span>
-                                <span class="card-date-day">${getDay(event.date)}</span>
+                            <div class="date-badge">
+                                <span class="date-month">${getMonth(event.date)}</span>
+                                <span class="date-day">${getDay(event.date)}</span>
                             </div>
 
                             <!-- Título -->
                             <div class="card-title-container">
-                                <h3 class="card-title hover-cat-${catKey}" title="${event.title}">
+                                <h3 class="card-title ${clampClass}" title="${event.title}">
                                     ${event.title}
                                 </h3>
                             </div>
 
                             <!-- Descripción -->
                             <div class="card-desc-container">
-                                <p class="card-desc">
+                                <p class="card-desc ${clampClass}">
                                     ${event.description || 'Descripción breve disponible.'}
                                 </p>
                             </div>
                             
-                            <!-- Botón de Acción -->
-                            <div class="card-action">
-                                <a href="${event.link}" target="_blank" class="btn-shine bg-cat-${catKey}">
-                                    <span class="btn-content">
-                                        <span class="btn-text">Ver video</span> 
-                                        <i class="fas fa-play btn-icon"></i>
+                            <!-- Info -->
+                            <div class="info-container">
+                                <div class="info-item">
+                                    <div class="info-icon">
+                                        <i class="far fa-clock"></i>
+                                    </div>
+                                    <span class="info-text-time">${formatTime(event.time)}</span>
+                                </div>
+                                <div class="info-item">
+                                    <div class="info-icon">
+                                        <i class="fas fa-link"></i>
+                                    </div>
+                                    <span class="info-text-loc" title="${event.location || 'Campus'}">${event.location || 'Campus'}</span>
+                                </div>
+                            </div>
+                            
+                            <!-- Botón -->
+                            <div style="margin-top: auto; position: relative; z-index: 20;">
+                                <a href="${event.link}" target="_blank" class="btn-action btn-shine" style="background-image: ${config.gradient};">
+                                    <span class="btn-inner">
+                                        <span class="btn-text">${event.cta || 'Participa'}</span> 
+                                        <i class="fas fa-arrow-right btn-icon"></i>
                                     </span>
                                 </a>
                             </div>
@@ -671,7 +704,17 @@
             }
         };
 
+        // Render on load
         renderEvents();
+        
+        // Handle window resize for dynamic class adjustments (like line-clamp)
+        window.addEventListener('resize', () => {
+             // Only re-render if it crosses the breakpoint to save performance
+             const currentWidth = window.innerWidth;
+             if(currentWidth === 768 || currentWidth === 767) {
+                  renderEvents();
+             }
+        });
 
     </script>
 </body>
